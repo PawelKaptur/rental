@@ -1,4 +1,4 @@
-package com.capgemini;
+package com.capgemini.entities;
 
 
 import lombok.AccessLevel;
@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Data
@@ -33,4 +34,8 @@ public class OutpostEntity {
 
     @Column(length = 50)
     private String email;
+
+    private Date dateOfCreating;
+
+    private Date dateOfEditing;
 }

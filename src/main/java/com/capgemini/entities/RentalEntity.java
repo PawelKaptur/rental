@@ -1,4 +1,4 @@
-package com.capgemini;
+package com.capgemini.entities;
 
 
 import lombok.AccessLevel;
@@ -40,6 +40,10 @@ public class RentalEntity {
     private OutpostEntity endOutpostId;
 
     private Integer cost;
+
+    private Date dateOfCreating;
+
+    private Date dateOfEditing;
 
 
 }

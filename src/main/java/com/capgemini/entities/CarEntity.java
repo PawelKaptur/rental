@@ -1,4 +1,4 @@
-package com.capgemini;
+package com.capgemini.entities;
 
 
 import lombok.AccessLevel;
@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Data
@@ -17,6 +18,7 @@ public class CarEntity {
     @Setter(AccessLevel.NONE)
     private Long id;
 
+    //enum? moze osobne entity
     private String carType;
 
     @Column(nullable = false, length = 30)
@@ -41,8 +43,11 @@ public class CarEntity {
     private Integer course;
 
 
-    //foreign key bedzie
-    //private Outpost currentLocation;
+    //foreign key
+    private OutpostEntity currentLocationId;
 
+    private Date dateOfCreating;
+
+    private Date dateOfEditing;
 
 }

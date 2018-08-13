@@ -1,4 +1,4 @@
-package com.capgemini;
+package com.capgemini.entities;
 
 
 import lombok.AccessLevel;
@@ -49,5 +49,7 @@ public class WorkerEntity {
     @Column(nullable = false)
     private Long phoneNumber;
 
+    private Date dateOfCreating;
 
+    private Date dateOfEditing;
 }

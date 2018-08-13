@@ -1,4 +1,4 @@
-package com.capgemini;
+package com.capgemini.entities;
 
 
 import lombok.AccessLevel;
@@ -44,4 +44,8 @@ public class ClientEntity {
 
     @Column(nullable = false, length = 16)
     private String creditCardNumber;
+
+    private Date dateOfCreating;
+
+    private Date dateOfEditing;
 }
