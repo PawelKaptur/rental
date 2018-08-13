@@ -1,4 +1,4 @@
-package com.capgemini.entities;
+package com.capgemini.entity;
 
 
 import lombok.AccessLevel;

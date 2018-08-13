@@ -1,10 +1,10 @@
-package com.capgemini.entities;
+package com.capgemini.entity;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -12,12 +12,17 @@ import java.util.Date;
 @Table(name = "wardens")
 public class WardenEntity {
 
-    //foreign key
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Setter(AccessLevel.NONE)
+    private Long id;
+
+    @ManyToOne
     @Column(nullable = false)
     private WorkerEntity workerId;
 
-
-    //foreign key
+    @ManyToOne
     @Column(nullable = false)
     private CarEntity carId;
 

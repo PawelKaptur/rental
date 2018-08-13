@@ -1,4 +1,4 @@
-package com.capgemini.entities;
+package com.capgemini.entity;
 
 
 import lombok.AccessLevel;
@@ -10,9 +10,8 @@ import java.util.Date;
 
 @Entity
 @Data
-@Table(name = "workers")
-public class WorkerEntity {
-
+@Table(name = "clients")
+public class ClientEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,15 +23,6 @@ public class WorkerEntity {
 
     @Column(nullable = false, length = 30)
     private String lastName;
-
-
-    //moze enum albo osobne entity zrobic
-    private String occupation;
-
-
-    //foreign key zrobic
-    @Column(nullable = false)
-    private OutpostEntity workplaceId;
 
     @Column(nullable = false)
     private Date dateOfBirth;
@@ -48,6 +38,12 @@ public class WorkerEntity {
 
     @Column(nullable = false)
     private Long phoneNumber;
+
+    @Column(length = 50)
+    private String email;
+
+    @Column(nullable = false, length = 16)
+    private String creditCardNumber;
 
     private Date dateOfCreating;
 

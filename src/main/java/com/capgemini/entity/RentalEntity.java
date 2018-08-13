@@ -1,4 +1,4 @@
-package com.capgemini.entities;
+package com.capgemini.entity;
 
 
 import lombok.AccessLevel;
@@ -19,11 +19,11 @@ public class RentalEntity {
     @Setter(AccessLevel.NONE)
     private Long id;
 
-    //foreign key
+    @ManyToOne
     @Column(nullable = false)
     private ClientEntity clientId;
 
-    //foreign key
+    @ManyToOne
     @Column(nullable = false)
     private CarEntity carId;
 
@@ -32,11 +32,11 @@ public class RentalEntity {
 
     private Date endDate;
 
-    //foreign key
+    @ManyToOne
     @Column(nullable = false)
     private OutpostEntity startOutpostId;
 
-    //foreign key
+    @ManyToOne
     private OutpostEntity endOutpostId;
 
     private Integer cost;

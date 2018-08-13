@@ -1,4 +1,4 @@
-package com.capgemini.entities;
+package com.capgemini.entity;
 
 
 import lombok.AccessLevel;
@@ -10,44 +10,44 @@ import java.util.Date;
 
 @Entity
 @Data
-@Table(name = "cars")
-public class CarEntity {
+@Table(name = "workers")
+public class WorkerEntity {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Setter(AccessLevel.NONE)
     private Long id;
 
-    //enum? moze osobne entity
-    private String carType;
+    @Column(nullable = false, length = 30)
+    private String firstName;
 
     @Column(nullable = false, length = 30)
-    private String brand;
+    private String lastName;
+
+    //moze enum albo osobne entity zrobic
+    private String occupation;
+
+    @ManyToOne
+    @Column(nullable = false)
+    private OutpostEntity workplaceId;
+
+    @Column(nullable = false)
+    private Date dateOfBirth;
 
     @Column(nullable = false, length = 30)
-    private String model;
-
-    @Column(nullable = false)
-    private Long productionYear;
+    private String city;
 
     @Column(nullable = false, length = 30)
-    private String color;
+    private String street;
 
     @Column(nullable = false)
-    private Double engineCapacity;
+    private Integer postalCode;
 
     @Column(nullable = false)
-    private Integer power;
-
-    @Column(nullable = false)
-    private Integer course;
-
-
-    //foreign key
-    private OutpostEntity currentLocationId;
+    private Long phoneNumber;
 
     private Date dateOfCreating;
 
     private Date dateOfEditing;
-
 }
