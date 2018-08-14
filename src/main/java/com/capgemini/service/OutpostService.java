@@ -12,4 +12,6 @@ public interface OutpostService {
     void deleteAll();
 
     List<OutpostTO> findAll();
+
+    void deleteOutpost(Long id);
 }

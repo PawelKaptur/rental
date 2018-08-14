@@ -40,4 +40,10 @@ public class OutpostServiceImpl implements OutpostService {
     public List<OutpostTO> findAll() {
         return OutpostMapper.toOutpostTOList(outpostRepository.findAll());
     }
+
+    @Override
+    @Transactional(readOnly = false)
+    public void deleteOutpost(Long id) {
+        outpostRepository.delete(id);
+    }
 }
