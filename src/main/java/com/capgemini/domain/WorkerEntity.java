@@ -13,10 +13,8 @@ import java.util.Date;
 @Table(name = "workers")
 public class WorkerEntity {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Setter(AccessLevel.NONE)
     private Long id;
 
     @Column(nullable = false, length = 30)
@@ -25,7 +23,7 @@ public class WorkerEntity {
     @Column(nullable = false, length = 30)
     private String lastName;
 
-    //moze enum albo osobne entity zrobic
+    //moze enum
     @Column(nullable = false)
     private String occupation;
 

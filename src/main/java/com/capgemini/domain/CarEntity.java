@@ -15,7 +15,7 @@ public class CarEntity {
     @GeneratedValue
     private Long id;
 
-    //enum? moze osobne entity
+    //enum?
     @Column(nullable = false)
     private String type;
 
