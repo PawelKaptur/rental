@@ -12,6 +12,13 @@ public class CarMapper {
 
         CarEntity carEntity = new CarEntity();
         carEntity.setBrand(carTO.getBrand());
+        carEntity.setCarType(carTO.getCarType());
+        carEntity.setColor(carTO.getColor());
+        carEntity.setCourse(carTO.getCourse());
+        carEntity.setEngineCapacity(carTO.getEngineCapacity());
+        carEntity.setModel(carTO.getModel());
+        carEntity.setPower(carTO.getPower());
+        carEntity.setProductionYear(carTO.getProductionYear());
 
         return carEntity;
     }
@@ -21,6 +28,9 @@ public class CarMapper {
             return null;
         }
 
-        return new CarTO.CarTOBuilder().withBrand(carEntity.getBrand()).withId(carEntity.getId()).build();
+        return new CarTO.CarTOBuilder().withBrand(carEntity.getBrand()).withId(carEntity.getId()).withDateOfCreating(carEntity.getDateOfCreating())
+                .withCarType(carEntity.getCarType()).withColor(carEntity.getColor()).withCourse(carEntity.getCourse()).withEngineCapacity(carEntity.getEngineCapacity())
+                .withModel(carEntity.getModel()).withPower(carEntity.getPower()).withProductionYear(carEntity.getProductionYear())
+                .withDateOfEditing(carEntity.getDateOfEditing()).build();
     }
 }

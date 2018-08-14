@@ -23,16 +23,17 @@ public class ApplicationTest {
     public void shouldFindCarById() {
 
         //given
-        CarTO car = new CarTO.CarTOBuilder().withBrand("Audi").build();
+        CarTO car = new CarTO.CarTOBuilder().withBrand("Audi").withCarType("sedan")
+                .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
+                .withProductionYear(2015).build();
         CarTO savedCar = carService.saveCar(car);
 
-
         //when
-        System.out.println(savedCar);
         CarTO selectedCar = carService.findCarById(savedCar.getId());
 
         //then
         assertThat(savedCar.getBrand()).isEqualTo(selectedCar.getBrand());
+        assertThat(savedCar.getId()).isEqualTo(selectedCar.getId());
     }
 
     /*@Test

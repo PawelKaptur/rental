@@ -13,7 +13,7 @@ public class CarTO {
     private String carType;
     private String brand;
     private String model;
-    private Long productionYear;
+    private Integer productionYear;
     private String color;
     private Double engineCapacity;
     private Integer power;
@@ -26,10 +26,19 @@ public class CarTO {
         return new CarTOBuilder();
     }
 
-    public CarTO(String brand, Long id) {
-        super();
-        this.brand = brand;
+
+    public CarTO(Long id, String carType, String brand, String model, Integer productionYear, String color, Double engineCapacity, Integer power, Integer course, Date dateOfCreating, Date dateOfEditing) {
         this.id = id;
+        this.carType = carType;
+        this.brand = brand;
+        this.model = model;
+        this.productionYear = productionYear;
+        this.color = color;
+        this.engineCapacity = engineCapacity;
+        this.power = power;
+        this.course = course;
+        this.dateOfCreating = dateOfCreating;
+        this.dateOfEditing = dateOfEditing;
     }
 
     public static class CarTOBuilder {
@@ -94,11 +103,21 @@ public class CarTO {
             return this;
         }
 
+        public CarTOBuilder withDateOfCreating(Date dateOfCreating){
+            this.dateOfCreating = dateOfCreating;
+            return this;
+        }
+
+        public CarTOBuilder withDateOfEditing(Date dateOfEditing){
+            this.dateOfEditing = dateOfEditing;
+            return this;
+        }
+
         //daty tutaj?
 
         public CarTO build(){
             //check
-            return new CarTO(brand, id);
+            return new CarTO(id, carType, brand, model, productionYear, color, engineCapacity, power, course, dateOfCreating, dateOfEditing);
         }
     }
 }
