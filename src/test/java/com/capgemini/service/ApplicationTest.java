@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.sql.SQLOutput;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,7 +38,7 @@ public class ApplicationTest {
     }
 
     @Test
-    public void shouldFindCarByBrand(){
+    public void shouldFindCarByBrand() {
 
         //given
         String brand = "BMW";
@@ -63,7 +64,7 @@ public class ApplicationTest {
     }
 
     @Test
-    public void shouldDeleteCar(){
+    public void shouldDeleteCarById() {
         //given
         String brand = "Audi";
         CarTO car = new CarTO.CarTOBuilder().withBrand(brand).withCarType("sedan")
@@ -86,5 +87,25 @@ public class ApplicationTest {
         //then
         assertThat(carService.findCarById(car3TO.getId())).isNull();
         assertThat(cars.size()).isEqualTo(2);
+    }
+
+    @Test
+    public void shouldUpdateCar() {
+
+        //given
+        String color = "White";
+        CarTO car = new CarTO.CarTOBuilder().withBrand("Audi").withCarType("sedan")
+                .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
+                .withProductionYear(2015).build();
+        CarTO savedCar = carService.saveCar(car);
+
+        //when
+        CarTO selectedCar = carService.findCarById(savedCar.getId());
+        selectedCar.setColor(color);
+        carService.updateCar(selectedCar);
+
+        //then
+        assertThat(carService.findCarById(selectedCar.getId()).getColor()).isEqualTo(color);
+        assertThat(carService.findCarById(selectedCar.getId()).getDateOfEditing()).isNotNull();
     }
 }

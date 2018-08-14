@@ -12,4 +12,8 @@ public interface CarService {
     CarTO saveCar(CarTO car);
 
     void deleteCar(Long id);
+
+    CarTO updateCar(CarTO car);
+
+    List<CarTO> findAllCars();
 }

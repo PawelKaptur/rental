@@ -35,10 +35,22 @@ public class CarServiceImpl implements CarService {
         CarEntity carEntity = carRepository.save(CarMapper.toCarEntity(car));
         return CarMapper.toCarTO(carEntity);
     }
-    
+
     @Override
     @Transactional(readOnly = false)
     public void deleteCar(Long id) {
         carRepository.delete(id);
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public CarTO updateCar(CarTO car) {
+        CarEntity carEntity = carRepository.update(CarMapper.toCarEntity(car));
+        return CarMapper.toCarTO(carEntity);
+    }
+
+    @Override
+    public List<CarTO> findAllCars() {
+        return CarMapper.toCarTOList(carRepository.findAll());
     }
 }

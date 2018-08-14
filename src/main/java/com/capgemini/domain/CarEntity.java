@@ -1,9 +1,7 @@
 package com.capgemini.domain;
 
 
-import lombok.AccessLevel;
 import lombok.Data;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -15,7 +13,6 @@ public class CarEntity {
 
     @Id
     @GeneratedValue
-    @Setter(AccessLevel.NONE)
     private Long id;
 
     //enum? moze osobne entity

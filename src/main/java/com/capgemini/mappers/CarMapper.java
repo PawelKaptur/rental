@@ -14,6 +14,9 @@ public class CarMapper {
         }
 
         CarEntity carEntity = new CarEntity();
+        if(carTO.getId() != null){
+            carEntity.setId(carTO.getId());
+        }
         carEntity.setBrand(carTO.getBrand());
         carEntity.setCarType(carTO.getCarType());
         carEntity.setColor(carTO.getColor());
@@ -22,6 +25,10 @@ public class CarMapper {
         carEntity.setModel(carTO.getModel());
         carEntity.setPower(carTO.getPower());
         carEntity.setProductionYear(carTO.getProductionYear());
+
+        if(carTO.getDateOfCreating() != null){
+            carEntity.setDateOfCreating(carTO.getDateOfCreating());
+        }
 
         return carEntity;
     }
