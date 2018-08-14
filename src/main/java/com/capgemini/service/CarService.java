@@ -16,4 +16,8 @@ public interface CarService {
     CarTO updateCar(CarTO car);
 
     List<CarTO> findAllCars();
+
+    List<CarTO> findCarByTypeAndBrand(String type, String brand);
+
+    void deleteAll();
 }

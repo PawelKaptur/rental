@@ -53,4 +53,15 @@ public class CarServiceImpl implements CarService {
     public List<CarTO> findAllCars() {
         return CarMapper.toCarTOList(carRepository.findAll());
     }
+
+    @Override
+    public List<CarTO> findCarByTypeAndBrand(String type, String brand) {
+        return CarMapper.toCarTOList(carRepository.findCarByTypeAndBrand(type, brand));
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public void deleteAll() {
+        carRepository.deleteAll();
+    }
 }

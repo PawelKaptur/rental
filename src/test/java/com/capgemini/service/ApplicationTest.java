@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.sql.SQLOutput;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -20,11 +19,16 @@ public class ApplicationTest {
     @Autowired
     private CarService carService;
 
+    @Before
+    public void setUp(){
+        carService.deleteAll();
+    }
+
     @Test
     public void shouldFindCarById() {
 
         //given
-        CarTO car = new CarTO.CarTOBuilder().withBrand("Audi").withCarType("sedan")
+        CarTO car = new CarTO.CarTOBuilder().withBrand("Audi").withType("sedan")
                 .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
                 .withProductionYear(2015).build();
         CarTO savedCar = carService.saveCar(car);
@@ -42,13 +46,13 @@ public class ApplicationTest {
 
         //given
         String brand = "BMW";
-        CarTO car = new CarTO.CarTOBuilder().withBrand(brand).withCarType("sedan")
+        CarTO car = new CarTO.CarTOBuilder().withBrand(brand).withType("sedan")
                 .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
                 .withProductionYear(2015).build();
-        CarTO car2 = new CarTO.CarTOBuilder().withBrand(brand).withCarType("sedan")
+        CarTO car2 = new CarTO.CarTOBuilder().withBrand(brand).withType("sedan")
                 .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
                 .withProductionYear(2015).build();
-        CarTO car3 = new CarTO.CarTOBuilder().withBrand("nieAudi").withCarType("sedan")
+        CarTO car3 = new CarTO.CarTOBuilder().withBrand("nieAudi").withType("sedan")
                 .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
                 .withProductionYear(2015).build();
         carService.saveCar(car);
@@ -67,13 +71,13 @@ public class ApplicationTest {
     public void shouldDeleteCarById() {
         //given
         String brand = "Audi";
-        CarTO car = new CarTO.CarTOBuilder().withBrand(brand).withCarType("sedan")
+        CarTO car = new CarTO.CarTOBuilder().withBrand(brand).withType("sedan")
                 .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
                 .withProductionYear(2015).build();
-        CarTO car2 = new CarTO.CarTOBuilder().withBrand(brand).withCarType("sedan")
+        CarTO car2 = new CarTO.CarTOBuilder().withBrand(brand).withType("sedan")
                 .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
                 .withProductionYear(2015).build();
-        CarTO car3 = new CarTO.CarTOBuilder().withBrand(brand).withCarType("sedan")
+        CarTO car3 = new CarTO.CarTOBuilder().withBrand(brand).withType("sedan")
                 .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
                 .withProductionYear(2015).build();
         carService.saveCar(car);
@@ -94,7 +98,7 @@ public class ApplicationTest {
 
         //given
         String color = "White";
-        CarTO car = new CarTO.CarTOBuilder().withBrand("Audi").withCarType("sedan")
+        CarTO car = new CarTO.CarTOBuilder().withBrand("Audi").withType("sedan")
                 .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
                 .withProductionYear(2015).build();
         CarTO savedCar = carService.saveCar(car);
@@ -107,5 +111,34 @@ public class ApplicationTest {
         //then
         assertThat(carService.findCarById(selectedCar.getId()).getColor()).isEqualTo(color);
         assertThat(carService.findCarById(selectedCar.getId()).getDateOfEditing()).isNotNull();
+    }
+
+    @Test
+    public void shouldFindCarByTypeAndBrand() {
+        //given
+        String brand = "Audi";
+        String type = "sedan";
+        CarTO car = new CarTO.CarTOBuilder().withBrand(brand).withType(type)
+                .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
+                .withProductionYear(2015).build();
+        CarTO car2 = new CarTO.CarTOBuilder().withBrand(brand).withType(type)
+                .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
+                .withProductionYear(2015).build();
+        CarTO car3 = new CarTO.CarTOBuilder().withBrand("BMW").withType(type)
+                .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
+                .withProductionYear(2015).build();
+        CarTO car4 = new CarTO.CarTOBuilder().withBrand(brand).withType("kombi")
+                .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
+                .withProductionYear(2015).build();
+        carService.saveCar(car);
+        carService.saveCar(car2);
+        carService.saveCar(car3);
+        carService.saveCar(car4);
+
+        //when
+        List<CarTO> cars = carService.findCarByTypeAndBrand(type, brand);
+
+        //then
+        assertThat(cars.size()).isEqualTo(2);
     }
 }

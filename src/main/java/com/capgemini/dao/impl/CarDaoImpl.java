@@ -18,4 +18,15 @@ public class CarDaoImpl extends AbstractDao<CarEntity, Long> implements CarDao {
 
         return query.getResultList();
     }
+
+    @Override
+    public List<CarEntity> findCarByTypeAndBrand(String type, String brand) {
+        TypedQuery<CarEntity> query = entityManager.createQuery(
+                "select car from CarEntity car where upper(car.brand) like concat(upper(:brand), '%')" +
+                        " and upper(car.type) like concat(upper(:type), '%')", CarEntity.class);
+        query.setParameter("type", type);
+        query.setParameter("brand", brand);
+
+        return query.getResultList();
+    }
 }

@@ -2,7 +2,6 @@ package com.capgemini.types;
 
 import lombok.Data;
 
-import javax.persistence.Column;
 import java.util.Date;
 
 @Data
@@ -10,7 +9,7 @@ public class CarTO {
 
     private Long id;
 
-    private String carType;
+    private String type;
     private String brand;
     private String model;
     private Integer productionYear;
@@ -27,9 +26,9 @@ public class CarTO {
     }
 
 
-    public CarTO(Long id, String carType, String brand, String model, Integer productionYear, String color, Double engineCapacity, Integer power, Integer course, Date dateOfCreating, Date dateOfEditing) {
+    public CarTO(Long id, String type, String brand, String model, Integer productionYear, String color, Double engineCapacity, Integer power, Integer course, Date dateOfCreating, Date dateOfEditing) {
         this.id = id;
-        this.carType = carType;
+        this.type = type;
         this.brand = brand;
         this.model = model;
         this.productionYear = productionYear;
@@ -43,7 +42,7 @@ public class CarTO {
 
     public static class CarTOBuilder {
         private Long id;
-        private String carType;
+        private String type;
         private String brand;
         private String model;
         private Integer productionYear;
@@ -63,8 +62,8 @@ public class CarTO {
             return this;
         }
 
-        public CarTOBuilder withCarType(String carType) {
-            this.carType = carType;
+        public CarTOBuilder withType(String carType) {
+            this.type = carType;
             return this;
         }
 
@@ -117,7 +116,7 @@ public class CarTO {
 
         public CarTO build(){
             //check
-            return new CarTO(id, carType, brand, model, productionYear, color, engineCapacity, power, course, dateOfCreating, dateOfEditing);
+            return new CarTO(id, type, brand, model, productionYear, color, engineCapacity, power, course, dateOfCreating, dateOfEditing);
         }
     }
 }

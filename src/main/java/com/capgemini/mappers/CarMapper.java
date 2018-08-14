@@ -14,21 +14,16 @@ public class CarMapper {
         }
 
         CarEntity carEntity = new CarEntity();
-        if(carTO.getId() != null){
-            carEntity.setId(carTO.getId());
-        }
+        carEntity.setId(carTO.getId());
         carEntity.setBrand(carTO.getBrand());
-        carEntity.setCarType(carTO.getCarType());
+        carEntity.setType(carTO.getType());
         carEntity.setColor(carTO.getColor());
         carEntity.setCourse(carTO.getCourse());
         carEntity.setEngineCapacity(carTO.getEngineCapacity());
         carEntity.setModel(carTO.getModel());
         carEntity.setPower(carTO.getPower());
         carEntity.setProductionYear(carTO.getProductionYear());
-
-        if(carTO.getDateOfCreating() != null){
-            carEntity.setDateOfCreating(carTO.getDateOfCreating());
-        }
+        carEntity.setDateOfCreating(carTO.getDateOfCreating());
 
         return carEntity;
     }
@@ -39,7 +34,7 @@ public class CarMapper {
         }
 
         return new CarTO.CarTOBuilder().withBrand(carEntity.getBrand()).withId(carEntity.getId()).withDateOfCreating(carEntity.getDateOfCreating())
-                .withCarType(carEntity.getCarType()).withColor(carEntity.getColor()).withCourse(carEntity.getCourse()).withEngineCapacity(carEntity.getEngineCapacity())
+                .withType(carEntity.getType()).withColor(carEntity.getColor()).withCourse(carEntity.getCourse()).withEngineCapacity(carEntity.getEngineCapacity())
                 .withModel(carEntity.getModel()).withPower(carEntity.getPower()).withProductionYear(carEntity.getProductionYear())
                 .withDateOfEditing(carEntity.getDateOfEditing()).build();
     }

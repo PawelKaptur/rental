@@ -17,7 +17,7 @@ public class CarEntity {
 
     //enum? moze osobne entity
     @Column(nullable = false)
-    private String carType;
+    private String type;
 
     @Column(nullable = false, length = 30)
     private String brand;
