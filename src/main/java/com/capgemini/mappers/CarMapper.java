@@ -3,6 +3,9 @@ package com.capgemini.mappers;
 import com.capgemini.domain.CarEntity;
 import com.capgemini.types.CarTO;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class CarMapper {
 
     public static CarEntity toCarEntity(CarTO carTO){
@@ -23,7 +26,7 @@ public class CarMapper {
         return carEntity;
     }
 
-    public static CarTO toCarTo(CarEntity carEntity) {
+    public static CarTO toCarTO(CarEntity carEntity) {
         if(carEntity == null){
             return null;
         }
@@ -32,5 +35,9 @@ public class CarMapper {
                 .withCarType(carEntity.getCarType()).withColor(carEntity.getColor()).withCourse(carEntity.getCourse()).withEngineCapacity(carEntity.getEngineCapacity())
                 .withModel(carEntity.getModel()).withPower(carEntity.getPower()).withProductionYear(carEntity.getProductionYear())
                 .withDateOfEditing(carEntity.getDateOfEditing()).build();
+    }
+
+    public static List<CarTO> toCarTOList(List<CarEntity> carsByBrand) {
+        return carsByBrand.stream().map(CarMapper::toCarTO).collect(Collectors.toList());
     }
 }

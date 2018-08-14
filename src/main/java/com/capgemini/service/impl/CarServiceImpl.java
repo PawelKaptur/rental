@@ -19,21 +19,26 @@ public class CarServiceImpl implements CarService {
     @Autowired
     private CarDao carRepository;
 
-    @Override
+/*    @Override
     public List<CarEntity> findCarByBrand(String brand) {
         List<CarEntity> cars = carRepository.findCarByBrand(brand);
         return cars;
+    }*/
+
+    @Override
+    public List<CarTO> findCarByBrand(String brand) {
+        return CarMapper.toCarTOList(carRepository.findCarByBrand(brand));
     }
 
     @Override
     public CarTO findCarById(Long id){
-        return CarMapper.toCarTo(carRepository.findOne(id));
+        return CarMapper.toCarTO(carRepository.findOne(id));
     }
 
     @Override
     @Transactional(readOnly = false)
     public CarTO saveCar(CarTO car) {
         CarEntity carEntity = carRepository.save(CarMapper.toCarEntity(car));
-        return CarMapper.toCarTo(carEntity);
+        return CarMapper.toCarTO(carEntity);
     }
 }

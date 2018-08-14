@@ -1,6 +1,5 @@
 package com.capgemini.service;
 
-import com.capgemini.domain.CarEntity;
 import com.capgemini.types.CarTO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,22 +35,25 @@ public class ApplicationTest {
         assertThat(savedCar.getId()).isEqualTo(selectedCar.getId());
     }
 
-    /*@Test
+    @Test
     public void shouldFindCarByBrand(){
 
         //given
-        CarEntity car = new CarEntity();
-        car.setBrand("Audi");
-        CarEntity car2 = new CarEntity();
-        car2.setBrand("Audi");
+        String brand = "Audi";
+        CarTO car = new CarTO.CarTOBuilder().withBrand(brand).withCarType("sedan")
+                .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
+                .withProductionYear(2015).build();
+        CarTO car2 = new CarTO.CarTOBuilder().withBrand(brand).withCarType("sedan")
+                .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
+                .withProductionYear(2015).build();
         carService.saveCar(car);
         carService.saveCar(car2);
 
-
         //when
-        List<CarEntity> cars = carService.findCarByBrand("Audi");
+        List<CarTO> cars = carService.findCarByBrand("Audi");
 
         //then
         assertThat(cars.size()).isEqualTo(2);
-    }*/
+        assertThat(cars.stream().anyMatch(c -> c.getBrand().equals(brand))).isTrue();
+    }
 }
