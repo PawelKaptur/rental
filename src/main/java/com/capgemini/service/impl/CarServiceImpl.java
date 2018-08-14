@@ -2,7 +2,9 @@ package com.capgemini.service.impl;
 
 import com.capgemini.dao.CarDao;
 import com.capgemini.domain.CarEntity;
+import com.capgemini.mappers.CarMapper;
 import com.capgemini.service.CarService;
+import com.capgemini.types.CarTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,14 +26,14 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public CarEntity findCarById(Long id) {
-        return carRepository.findOne(id);
+    public CarTO findCarById(Long id){
+        return CarMapper.toCarTo(carRepository.findOne(id));
     }
 
     @Override
     @Transactional(readOnly = false)
-    public CarEntity saveCar(CarEntity car) {
-        CarEntity carEntity = carRepository.save(car);
-        return carEntity;
+    public CarTO saveCar(CarTO car) {
+        CarEntity carEntity = carRepository.save(CarMapper.toCarEntity(car));
+        return CarMapper.toCarTo(carEntity);
     }
 }

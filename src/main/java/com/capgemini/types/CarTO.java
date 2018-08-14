@@ -19,15 +19,17 @@ public class CarTO {
     private Integer power;
     private Integer course;
 
-
-/*    @ManyToOne
-    private OutpostEntity currentLocationId;*/
-
     private Date dateOfCreating;
     private Date dateOfEditing;
 
     public static CarTOBuilder builder() {
         return new CarTOBuilder();
+    }
+
+    public CarTO(String brand, Long id) {
+        super();
+        this.brand = brand;
+        this.id = id;
     }
 
     public static class CarTOBuilder {
@@ -43,33 +45,60 @@ public class CarTO {
         private Date dateOfCreating;
         private Date dateOfEditing;
 
-        public CarTOBuilder(){
+        public CarTOBuilder() {
             super();
         }
 
-        public CarTOBuilder withId(Long id){
+        public CarTOBuilder withId(Long id) {
             this.id = id;
             return this;
         }
 
-        public CarTOBuilder withCarType(String carType){
+        public CarTOBuilder withCarType(String carType) {
             this.carType = carType;
             return this;
         }
 
-        public CarTOBuilder withBrand(String brand){
+        public CarTOBuilder withBrand(String brand) {
             this.brand = brand;
             return this;
         }
 
-        public CarTOBuilder withModel(String model){
+        public CarTOBuilder withModel(String model) {
             this.model = model;
             return this;
         }
 
-        public CarTOBuilder withProductionYear(Integer productionYear){
+        public CarTOBuilder withProductionYear(Integer productionYear) {
             this.productionYear = productionYear;
             return this;
+        }
+
+        public CarTOBuilder withColor(String color) {
+            this.color = color;
+            return this;
+        }
+
+        public CarTOBuilder withEngineCapacity(Double engineCapacity) {
+            this.engineCapacity = engineCapacity;
+            return this;
+        }
+
+        public CarTOBuilder withPower(Integer power) {
+            this.power = power;
+            return this;
+        }
+
+        public CarTOBuilder withCourse(Integer course) {
+            this.course = course;
+            return this;
+        }
+
+        //daty tutaj?
+
+        public CarTO build(){
+            //check
+            return new CarTO(brand, id);
         }
     }
 }
