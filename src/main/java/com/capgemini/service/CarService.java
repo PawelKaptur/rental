@@ -1,6 +1,6 @@
 package com.capgemini.service;
 
-import com.capgemini.entity.CarEntity;
+import com.capgemini.domain.CarEntity;
 
 import java.util.List;
 

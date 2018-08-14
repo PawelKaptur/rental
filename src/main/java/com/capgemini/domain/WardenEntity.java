@@ -1,4 +1,4 @@
-package com.capgemini.entity;
+package com.capgemini.domain;
 
 import lombok.AccessLevel;
 import lombok.Data;
@@ -19,11 +19,9 @@ public class WardenEntity {
     private Long id;
 
     @ManyToOne
-    @Column(nullable = false)
     private WorkerEntity workerId;
 
     @ManyToOne
-    @Column(nullable = false)
     private CarEntity carId;
 
     private Date dateOfCreating;

@@ -1,4 +1,4 @@
-package com.capgemini.entity;
+package com.capgemini.domain;
 
 
 import lombok.AccessLevel;
@@ -20,11 +20,9 @@ public class RentalEntity {
     private Long id;
 
     @ManyToOne
-    @Column(nullable = false)
     private ClientEntity clientId;
 
     @ManyToOne
-    @Column(nullable = false)
     private CarEntity carId;
 
     @Column(nullable = false)
@@ -33,7 +31,6 @@ public class RentalEntity {
     private Date endDate;
 
     @ManyToOne
-    @Column(nullable = false)
     private OutpostEntity startOutpostId;
 
     @ManyToOne

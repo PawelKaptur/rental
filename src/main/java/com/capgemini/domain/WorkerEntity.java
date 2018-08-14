@@ -1,4 +1,4 @@
-package com.capgemini.entity;
+package com.capgemini.domain;
 
 
 import lombok.AccessLevel;
@@ -29,7 +29,6 @@ public class WorkerEntity {
     private String occupation;
 
     @ManyToOne
-    @Column(nullable = false)
     private OutpostEntity workplaceId;
 
     @Column(nullable = false)

@@ -1,4 +1,4 @@
-package com.capgemini.entity;
+package com.capgemini.domain;
 
 
 import lombok.AccessLevel;
@@ -9,31 +9,31 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table(name = "CAR")
 @Data
-@Table(name = "cars")
 public class CarEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    //@Setter(AccessLevel.NONE)
+    @GeneratedValue
+    @Setter(AccessLevel.NONE)
     private Long id;
 
     //enum? moze osobne entity
     private String carType;
 
-    //@Column(nullable = false, length = 30)
+    @Column(nullable = false, length = 30)
     private String brand;
 
     //@Column(nullable = false, length = 30)
     private String model;
 
     //@Column(nullable = false)
-    private Long productionYear;
+    private Integer productionYear;
 
-   // @Column(nullable = false, length = 30)
+    // @Column(nullable = false, length = 30)
     private String color;
 
-   // @Column(nullable = false)
+    // @Column(nullable = false)
     private Double engineCapacity;
 
     //@Column(nullable = false)
@@ -59,5 +59,4 @@ public class CarEntity {
     protected void onUpdate(){
         dateOfEditing = new Date();
     }
-
 }

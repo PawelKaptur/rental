@@ -1,12 +1,14 @@
-package com.capgemini.service;
+package com.capgemini.service.impl;
 
 import com.capgemini.dao.CarDao;
-import com.capgemini.entity.CarEntity;
+import com.capgemini.domain.CarEntity;
+import com.capgemini.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional(readOnly = true)

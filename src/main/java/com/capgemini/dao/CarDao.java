@@ -1,6 +1,6 @@
 package com.capgemini.dao;
 
-import com.capgemini.entity.CarEntity;
+import com.capgemini.domain.CarEntity;
 
 import java.util.List;
 
