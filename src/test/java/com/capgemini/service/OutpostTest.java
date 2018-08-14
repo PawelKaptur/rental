@@ -103,4 +103,21 @@ public class OutpostTest {
         assertThat(outpostService.findOutpostById(outpost3TO.getId())).isNull();
         assertThat(outposts.size()).isEqualTo(2);
     }
+
+    @Test
+    public void shouldUpdateOutpust() {
+        //given
+        String street = "Marcelinska";
+        OutpostTO outpostTO = new OutpostTOBuilder().withPhoneNumber(123456789L)
+                .withEmail("out1@gmail.com").withStreet("Mokebe")
+                .withPostalCode(21345).withCity("New York").build();
+        OutpostTO savedOutpost = outpostService.addOutpost(outpostTO);
+
+        //when
+        OutpostTO selectedOutpost = outpostService.findOutpostById(savedOutpost.getId());
+        selectedOutpost.setStreet(street);
+        outpostService.updateOutpust(selectedOutpost);
+
+        //then
+        assertThat(outpostService.findOutpostById(selectedOutpost.getId()).getStreet()).isEqualTo(street); }
 }

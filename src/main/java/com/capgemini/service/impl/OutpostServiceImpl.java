@@ -46,4 +46,11 @@ public class OutpostServiceImpl implements OutpostService {
     public void deleteOutpost(Long id) {
         outpostRepository.delete(id);
     }
+
+    @Override
+    @Transactional(readOnly = false)
+    public OutpostTO updateOutpust(OutpostTO outpost) {
+        OutpostEntity outpostEntity = outpostRepository.update(OutpostMapper.toOutpostEntity(outpost));
+        return OutpostMapper.toOutpostTO(outpostEntity);
+    }
 }
