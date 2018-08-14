@@ -18,7 +18,6 @@ public class OutpostEntity {
     @Setter(AccessLevel.NONE)
     private Long id;
 
-
     //osobne entity do adresow?
     @Column(nullable = false, length = 30)
     private String city;
@@ -35,6 +34,7 @@ public class OutpostEntity {
     @Column(length = 50)
     private String email;
 
+    @Column(nullable = false)
     private Date dateOfCreating;
 
     private Date dateOfEditing;

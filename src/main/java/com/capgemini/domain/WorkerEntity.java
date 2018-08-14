@@ -26,6 +26,7 @@ public class WorkerEntity {
     private String lastName;
 
     //moze enum albo osobne entity zrobic
+    @Column(nullable = false)
     private String occupation;
 
     @ManyToOne
@@ -46,6 +47,7 @@ public class WorkerEntity {
     @Column(nullable = false)
     private Long phoneNumber;
 
+    @Column(nullable = false)
     private Date dateOfCreating;
 
     private Date dateOfEditing;

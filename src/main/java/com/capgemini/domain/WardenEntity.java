@@ -24,6 +24,7 @@ public class WardenEntity {
     @ManyToOne
     private CarEntity carId;
 
+    @Column(nullable = false)
     private Date dateOfCreating;
 
     private Date dateOfEditing;

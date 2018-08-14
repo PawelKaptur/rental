@@ -19,33 +19,31 @@ public class CarEntity {
     private Long id;
 
     //enum? moze osobne entity
+    @Column(nullable = false)
     private String carType;
 
     @Column(nullable = false, length = 30)
     private String brand;
 
-    //@Column(nullable = false, length = 30)
+    @Column(nullable = false, length = 30)
     private String model;
 
-    //@Column(nullable = false)
+    @Column(nullable = false)
     private Integer productionYear;
 
-    // @Column(nullable = false, length = 30)
+    @Column(nullable = false, length = 30)
     private String color;
 
-    // @Column(nullable = false)
+    @Column(nullable = false)
     private Double engineCapacity;
 
-    //@Column(nullable = false)
+    @Column(nullable = false)
     private Integer power;
 
-    //@Column(nullable = false)
+    @Column(nullable = false)
     private Integer course;
 
-
-/*    @ManyToOne
-    private OutpostEntity currentLocationId;*/
-
+    @Column(nullable = false)
     private Date dateOfCreating;
 
     private Date dateOfEditing;

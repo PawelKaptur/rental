@@ -38,6 +38,7 @@ public class RentalEntity {
 
     private Integer cost;
 
+    @Column(nullable = false)
     private Date dateOfCreating;
 
     private Date dateOfEditing;

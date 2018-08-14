@@ -19,12 +19,6 @@ public class CarServiceImpl implements CarService {
     @Autowired
     private CarDao carRepository;
 
-/*    @Override
-    public List<CarEntity> findCarByBrand(String brand) {
-        List<CarEntity> cars = carRepository.findCarByBrand(brand);
-        return cars;
-    }*/
-
     @Override
     public List<CarTO> findCarByBrand(String brand) {
         return CarMapper.toCarTOList(carRepository.findCarByBrand(brand));
@@ -40,5 +34,11 @@ public class CarServiceImpl implements CarService {
     public CarTO saveCar(CarTO car) {
         CarEntity carEntity = carRepository.save(CarMapper.toCarEntity(car));
         return CarMapper.toCarTO(carEntity);
+    }
+    
+    @Override
+    @Transactional(readOnly = false)
+    public void deleteCar(Long id) {
+        carRepository.delete(id);
     }
 }

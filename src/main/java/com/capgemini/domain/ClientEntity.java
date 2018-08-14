@@ -45,6 +45,7 @@ public class ClientEntity {
     @Column(nullable = false, length = 16)
     private String creditCardNumber;
 
+    @Column(nullable = false)
     private Date dateOfCreating;
 
     private Date dateOfEditing;
