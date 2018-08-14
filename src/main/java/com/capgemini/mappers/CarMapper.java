@@ -2,6 +2,7 @@ package com.capgemini.mappers;
 
 import com.capgemini.domain.CarEntity;
 import com.capgemini.types.CarTO;
+import com.capgemini.types.CarTO.CarTOBuilder;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,7 +34,7 @@ public class CarMapper {
             return null;
         }
 
-        return new CarTO.CarTOBuilder().withBrand(carEntity.getBrand()).withId(carEntity.getId()).withDateOfCreating(carEntity.getDateOfCreating())
+        return new CarTOBuilder().withBrand(carEntity.getBrand()).withId(carEntity.getId()).withDateOfCreating(carEntity.getDateOfCreating())
                 .withType(carEntity.getType()).withColor(carEntity.getColor()).withCourse(carEntity.getCourse()).withEngineCapacity(carEntity.getEngineCapacity())
                 .withModel(carEntity.getModel()).withPower(carEntity.getPower()).withProductionYear(carEntity.getProductionYear())
                 .withDateOfEditing(carEntity.getDateOfEditing()).build();

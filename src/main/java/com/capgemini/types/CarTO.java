@@ -1,10 +1,12 @@
 package com.capgemini.types;
 
-import lombok.Data;
+import lombok.*;
 
 import java.util.Date;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CarTO {
 
     private Long id;
@@ -25,21 +27,6 @@ public class CarTO {
         return new CarTOBuilder();
     }
 
-
-    public CarTO(Long id, String type, String brand, String model, Integer productionYear, String color, Double engineCapacity, Integer power, Integer course, Date dateOfCreating, Date dateOfEditing) {
-        this.id = id;
-        this.type = type;
-        this.brand = brand;
-        this.model = model;
-        this.productionYear = productionYear;
-        this.color = color;
-        this.engineCapacity = engineCapacity;
-        this.power = power;
-        this.course = course;
-        this.dateOfCreating = dateOfCreating;
-        this.dateOfEditing = dateOfEditing;
-    }
-
     public static class CarTOBuilder {
         private Long id;
         private String type;
@@ -54,7 +41,7 @@ public class CarTO {
         private Date dateOfEditing;
 
         public CarTOBuilder() {
-            super();
+
         }
 
         public CarTOBuilder withId(Long id) {

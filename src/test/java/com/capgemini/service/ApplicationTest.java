@@ -1,6 +1,7 @@
 package com.capgemini.service;
 
 import com.capgemini.types.CarTO;
+import com.capgemini.types.CarTO.CarTOBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,7 +29,7 @@ public class ApplicationTest {
     public void shouldFindCarById() {
 
         //given
-        CarTO car = new CarTO.CarTOBuilder().withBrand("Audi").withType("sedan")
+        CarTO car = new CarTOBuilder().withBrand("Audi").withType("sedan")
                 .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
                 .withProductionYear(2015).build();
         CarTO savedCar = carService.saveCar(car);
@@ -46,13 +47,13 @@ public class ApplicationTest {
 
         //given
         String brand = "BMW";
-        CarTO car = new CarTO.CarTOBuilder().withBrand(brand).withType("sedan")
+        CarTO car = new CarTOBuilder().withBrand(brand).withType("sedan")
                 .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
                 .withProductionYear(2015).build();
-        CarTO car2 = new CarTO.CarTOBuilder().withBrand(brand).withType("sedan")
+        CarTO car2 = new CarTOBuilder().withBrand(brand).withType("sedan")
                 .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
                 .withProductionYear(2015).build();
-        CarTO car3 = new CarTO.CarTOBuilder().withBrand("nieAudi").withType("sedan")
+        CarTO car3 = new CarTOBuilder().withBrand("nieAudi").withType("sedan")
                 .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
                 .withProductionYear(2015).build();
         carService.saveCar(car);
@@ -71,13 +72,13 @@ public class ApplicationTest {
     public void shouldDeleteCarById() {
         //given
         String brand = "Audi";
-        CarTO car = new CarTO.CarTOBuilder().withBrand(brand).withType("sedan")
+        CarTO car = new CarTOBuilder().withBrand(brand).withType("sedan")
                 .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
                 .withProductionYear(2015).build();
-        CarTO car2 = new CarTO.CarTOBuilder().withBrand(brand).withType("sedan")
+        CarTO car2 = new CarTOBuilder().withBrand(brand).withType("sedan")
                 .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
                 .withProductionYear(2015).build();
-        CarTO car3 = new CarTO.CarTOBuilder().withBrand(brand).withType("sedan")
+        CarTO car3 = new CarTOBuilder().withBrand(brand).withType("sedan")
                 .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
                 .withProductionYear(2015).build();
         carService.saveCar(car);
@@ -98,7 +99,7 @@ public class ApplicationTest {
 
         //given
         String color = "White";
-        CarTO car = new CarTO.CarTOBuilder().withBrand("Audi").withType("sedan")
+        CarTO car = new CarTOBuilder().withBrand("Audi").withType("sedan")
                 .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
                 .withProductionYear(2015).build();
         CarTO savedCar = carService.saveCar(car);
@@ -118,16 +119,16 @@ public class ApplicationTest {
         //given
         String brand = "Audi";
         String type = "sedan";
-        CarTO car = new CarTO.CarTOBuilder().withBrand(brand).withType(type)
+        CarTO car = new CarTOBuilder().withBrand(brand).withType(type)
                 .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
                 .withProductionYear(2015).build();
-        CarTO car2 = new CarTO.CarTOBuilder().withBrand(brand).withType(type)
+        CarTO car2 = new CarTOBuilder().withBrand(brand).withType(type)
                 .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
                 .withProductionYear(2015).build();
-        CarTO car3 = new CarTO.CarTOBuilder().withBrand("BMW").withType(type)
+        CarTO car3 = new CarTOBuilder().withBrand("BMW").withType(type)
                 .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
                 .withProductionYear(2015).build();
-        CarTO car4 = new CarTO.CarTOBuilder().withBrand(brand).withType("kombi")
+        CarTO car4 = new CarTOBuilder().withBrand(brand).withType("kombi")
                 .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
                 .withProductionYear(2015).build();
         carService.saveCar(car);
@@ -141,4 +142,27 @@ public class ApplicationTest {
         //then
         assertThat(cars.size()).isEqualTo(2);
     }
+
+    @Test
+    public void shouldDeleteAllCarsFromRepository(){
+        //given
+        String brand = "Audi";
+        String type = "sedan";
+        CarTO car = new CarTOBuilder().withBrand(brand).withType(type)
+                .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
+                .withProductionYear(2015).build();
+        CarTO car2 = new CarTOBuilder().withBrand(brand).withType(type)
+                .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
+                .withProductionYear(2015).build();
+        carService.saveCar(car);
+        carService.saveCar(car2);
+
+        //when
+        carService.deleteAll();
+        List<CarTO> cars = carService.findAllCars();
+
+        //then
+        assertThat(cars).isEmpty();
+    }
+
 }

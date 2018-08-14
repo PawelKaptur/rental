@@ -12,7 +12,6 @@ import java.util.Date;
 @Table(name = "wardens")
 public class WardenEntity {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Setter(AccessLevel.NONE)
@@ -23,9 +22,4 @@ public class WardenEntity {
 
     @ManyToOne
     private CarEntity carId;
-
-    @Column(nullable = false)
-    private Date dateOfCreating;
-
-    private Date dateOfEditing;
 }

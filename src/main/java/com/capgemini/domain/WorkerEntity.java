@@ -46,9 +46,4 @@ public class WorkerEntity {
 
     @Column(nullable = false)
     private Long phoneNumber;
-
-    @Column(nullable = false)
-    private Date dateOfCreating;
-
-    private Date dateOfEditing;
 }

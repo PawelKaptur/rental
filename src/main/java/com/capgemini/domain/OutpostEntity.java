@@ -15,7 +15,6 @@ public class OutpostEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Setter(AccessLevel.NONE)
     private Long id;
 
     //osobne entity do adresow?
@@ -33,9 +32,4 @@ public class OutpostEntity {
 
     @Column(length = 50)
     private String email;
-
-    @Column(nullable = false)
-    private Date dateOfCreating;
-
-    private Date dateOfEditing;
 }
