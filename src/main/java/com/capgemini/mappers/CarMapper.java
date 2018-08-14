@@ -40,7 +40,7 @@ public class CarMapper {
                 .withDateOfEditing(carEntity.getDateOfEditing()).build();
     }
 
-    public static List<CarTO> toCarTOList(List<CarEntity> carsByBrand) {
-        return carsByBrand.stream().map(CarMapper::toCarTO).collect(Collectors.toList());
+    public static List<CarTO> toCarTOList(List<CarEntity> cars) {
+        return cars.stream().map(CarMapper::toCarTO).collect(Collectors.toList());
     }
 }

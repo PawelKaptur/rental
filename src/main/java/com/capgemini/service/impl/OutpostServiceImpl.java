@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional(readOnly = true)
 public class OutpostServiceImpl implements OutpostService {
@@ -26,5 +28,16 @@ public class OutpostServiceImpl implements OutpostService {
     public OutpostTO addOutpost(OutpostTO outpost) {
         OutpostEntity outpostEntity = outpostRepository.save(OutpostMapper.toOutpostEntity(outpost));
         return OutpostMapper.toOutpostTO(outpostEntity);
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public void deleteAll() {
+        outpostRepository.deleteAll();
+    }
+
+    @Override
+    public List<OutpostTO> findAll() {
+        return OutpostMapper.toOutpostTOList(outpostRepository.findAll());
     }
 }

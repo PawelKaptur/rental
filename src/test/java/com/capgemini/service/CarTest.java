@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ApplicationTest {
+public class CarTest {
 
     @Autowired
     private CarService carService;

@@ -4,6 +4,9 @@ import com.capgemini.domain.OutpostEntity;
 import com.capgemini.types.OutpostTO;
 import com.capgemini.types.OutpostTO.OutpostTOBuilder;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class OutpostMapper {
     public static OutpostEntity toOutpostEntity(OutpostTO outpost) {
         if (outpost == null){
@@ -30,5 +33,9 @@ public class OutpostMapper {
                 .withPostalCode(outpostEntity.getPostalCode()).withStreet(outpostEntity.getStreet())
                 .withEmail(outpostEntity.getEmail()).withPhoneNumber(outpostEntity.getPhoneNumber())
                 .build();
+    }
+
+    public static List<OutpostTO> toOutpostTOList(List<OutpostEntity> outposts) {
+        return outposts.stream().map(OutpostMapper::toOutpostTO).collect(Collectors.toList());
     }
 }
