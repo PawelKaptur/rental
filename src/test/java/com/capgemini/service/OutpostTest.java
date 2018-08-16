@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 
@@ -26,12 +27,8 @@ public class OutpostTest {
     @Autowired
     private WorkerService workerService;
 
-    @Before
-    public void setUp(){
-        outpostService.deleteAll();
-    }
-
     @Test
+    @Transactional
     public void shouldAddOutpost(){
         //given
         OutpostTO outpostTO = new OutpostTOBuilder().withPhoneNumber(123456789L)
@@ -47,6 +44,7 @@ public class OutpostTest {
     }
 
     @Test
+    @Transactional
     public void shouldDeleteAllOutpostFromRepository(){
         //given
         OutpostTO outpostTO = new OutpostTOBuilder().withPhoneNumber(123456789L)
@@ -63,7 +61,8 @@ public class OutpostTest {
     }
 
     @Test
-    public void shouldFindThreeCarsInRepository(){
+    @Transactional
+    public void shouldFindThreeOutpustsInRepository(){
         //given
         OutpostTO outpostTO = new OutpostTOBuilder().withPhoneNumber(123456789L)
                 .withEmail("out1@gmail.com").withStreet("Mokebe")
@@ -86,7 +85,8 @@ public class OutpostTest {
     }
 
     @Test
-    public void shouldDeleteCarById() {
+    @Transactional
+    public void shouldDeleteOutpustById() {
         //given
         OutpostTO outpostTO = new OutpostTOBuilder().withPhoneNumber(123456789L)
                 .withEmail("out1@gmail.com").withStreet("Mokebe")
@@ -111,6 +111,7 @@ public class OutpostTest {
     }
 
     @Test
+    @Transactional
     public void shouldUpdateOutpust() {
         //given
         String street = "Marcelinska";
@@ -129,9 +130,9 @@ public class OutpostTest {
     }
 
     @Test
-    public void addWorkerToOutpost() {
+    @Transactional
+    public void shouldAddWorkerToOutpost() {
         //given
-        String street = "Marcelinska";
         OutpostTO outpostTO = new OutpostTOBuilder().withPhoneNumber(123456789L)
                 .withEmail("out1@gmail.com").withStreet("Mokebe")
                 .withPostalCode(21345).withCity("New York").build();
@@ -151,4 +152,27 @@ public class OutpostTest {
         assertThat(outpostService.findOutpostById(savedOutpost.getId()).getWorkers().size()).isEqualTo(2);
     }
 
+    @Test
+    @Transactional
+    public void shouldRemoveWorkerFromOutpost(){
+        //given
+        OutpostTO outpostTO = new OutpostTOBuilder().withPhoneNumber(123456789L)
+                .withEmail("out1@gmail.com").withStreet("Mokebe")
+                .withPostalCode(21345).withCity("New York").build();
+        OutpostTO savedOutpost = outpostService.addOutpost(outpostTO);
+
+        WorkerTO worker = new WorkerTO().builder().dateOfBirth(new Date()).occupation("manager").street("asd").postalCode(12345)
+                .phoneNumber(987654321L).firstName("Seba").lastName("Kox").city("qwe").build();
+
+        WorkerTO savedWorker = workerService.addWorker(worker);
+        WorkerTO savedWorker2 = workerService.addWorker(worker);
+        outpostService.addWorkerToOutpost(savedOutpost, savedWorker);
+        outpostService.addWorkerToOutpost(savedOutpost, savedWorker2);
+
+        //when
+        outpostService.removeWorkerFromOutpost(savedOutpost, savedWorker);
+
+        //
+        assertThat(outpostService.findOutpostById(savedOutpost.getId()).getWorkers().size()).isEqualTo(1);
+    }
 }

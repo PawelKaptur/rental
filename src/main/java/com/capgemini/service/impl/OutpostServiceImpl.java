@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -60,7 +59,6 @@ public class OutpostServiceImpl implements OutpostService {
     @Override
     @Transactional(readOnly = false)
     public void addWorkerToOutpost(OutpostTO outpost, WorkerTO worker) {
-
         List<WorkerTO> workers;
 
         if(outpost.getWorkers() != null){
@@ -69,8 +67,25 @@ public class OutpostServiceImpl implements OutpostService {
         else {
             workers = new LinkedList<>();
         }
-        
+
         workers.add(worker);
+        outpost.setWorkers(workers);
+        OutpostEntity outpostEntity = outpostRepository.update(OutpostMapper.toOutpostEntity(outpost));
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public void removeWorkerFromOutpost(OutpostTO outpost, WorkerTO worker) {
+        List<WorkerTO> workers;
+
+        if(outpost.getWorkers() != null){
+            workers = outpost.getWorkers();
+        }
+        else {
+            workers = new LinkedList<>();
+        }
+
+        workers.remove(worker);
         outpost.setWorkers(workers);
         OutpostEntity outpostEntity = outpostRepository.update(OutpostMapper.toOutpostEntity(outpost));
     }

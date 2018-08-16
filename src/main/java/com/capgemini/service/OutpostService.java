@@ -19,4 +19,6 @@ public interface OutpostService {
     OutpostTO updateOutpost(OutpostTO outpost);
 
     void addWorkerToOutpost(OutpostTO outpost, WorkerTO worker);
+
+    void removeWorkerFromOutpost(OutpostTO outpost, WorkerTO worker);
 }
