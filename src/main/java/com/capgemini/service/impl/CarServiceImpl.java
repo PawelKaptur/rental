@@ -31,7 +31,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     @Transactional(readOnly = false)
-    public CarTO saveCar(CarTO car) {
+    public CarTO addCar(CarTO car) {
         CarEntity carEntity = carRepository.save(CarMapper.toCarEntity(car));
         return CarMapper.toCarTO(carEntity);
     }

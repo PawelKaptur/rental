@@ -9,7 +9,7 @@ public interface CarService {
 
     CarTO findCarById(Long id);
 
-    CarTO saveCar(CarTO car);
+    CarTO addCar(CarTO car);
 
     void deleteCar(Long id);
 

@@ -32,7 +32,7 @@ public class CarTest {
         CarTO car = new CarTOBuilder().withBrand("Audi").withType("sedan")
                 .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
                 .withProductionYear(2015).build();
-        CarTO savedCar = carService.saveCar(car);
+        CarTO savedCar = carService.addCar(car);
 
         //when
         CarTO selectedCar = carService.findCarById(savedCar.getId());
@@ -56,9 +56,9 @@ public class CarTest {
         CarTO car3 = new CarTOBuilder().withBrand("nieAudi").withType("sedan")
                 .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
                 .withProductionYear(2015).build();
-        carService.saveCar(car);
-        carService.saveCar(car2);
-        carService.saveCar(car3);
+        carService.addCar(car);
+        carService.addCar(car2);
+        carService.addCar(car3);
 
         //when
         List<CarTO> cars = carService.findCarByBrand(brand);
@@ -81,9 +81,9 @@ public class CarTest {
         CarTO car3 = new CarTOBuilder().withBrand(brand).withType("sedan")
                 .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
                 .withProductionYear(2015).build();
-        carService.saveCar(car);
-        carService.saveCar(car2);
-        CarTO car3TO = carService.saveCar(car3);
+        carService.addCar(car);
+        carService.addCar(car2);
+        CarTO car3TO = carService.addCar(car3);
 
         //when
         carService.deleteCar(car3TO.getId());
@@ -102,7 +102,7 @@ public class CarTest {
         CarTO car = new CarTOBuilder().withBrand("Audi").withType("sedan")
                 .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
                 .withProductionYear(2015).build();
-        CarTO savedCar = carService.saveCar(car);
+        CarTO savedCar = carService.addCar(car);
 
         //when
         CarTO selectedCar = carService.findCarById(savedCar.getId());
@@ -131,10 +131,10 @@ public class CarTest {
         CarTO car4 = new CarTOBuilder().withBrand(brand).withType("kombi")
                 .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
                 .withProductionYear(2015).build();
-        carService.saveCar(car);
-        carService.saveCar(car2);
-        carService.saveCar(car3);
-        carService.saveCar(car4);
+        carService.addCar(car);
+        carService.addCar(car2);
+        carService.addCar(car3);
+        carService.addCar(car4);
 
         //when
         List<CarTO> cars = carService.findCarByTypeAndBrand(type, brand);
@@ -154,8 +154,8 @@ public class CarTest {
         CarTO car2 = new CarTOBuilder().withBrand(brand).withType(type)
                 .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
                 .withProductionYear(2015).build();
-        carService.saveCar(car);
-        carService.saveCar(car2);
+        carService.addCar(car);
+        carService.addCar(car2);
 
         //when
         carService.deleteAll();

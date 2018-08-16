@@ -27,8 +27,9 @@ public class WorkerEntity {
     @Column(nullable = false)
     private String occupation;
 
-    @ManyToOne
-    private OutpostEntity workplaceId;
+    //pomyslec nad relacja, na razie po id
+    //@ManyToOne
+    private Long workplaceId;
 
     @Column(nullable = false)
     private Date dateOfBirth;
