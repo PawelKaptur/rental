@@ -34,6 +34,6 @@ public class OutpostEntity {
     @Column(length = 50)
     private String email;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.PERSIST)
     private List<WorkerEntity> workers;
 }

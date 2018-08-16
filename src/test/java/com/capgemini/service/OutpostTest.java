@@ -175,4 +175,31 @@ public class OutpostTest {
         //
         assertThat(outpostService.findOutpostById(savedOutpost.getId()).getWorkers().size()).isEqualTo(1);
     }
+
+    @Test
+    @Transactional
+    public void shouldFindFourWorkers(){
+        OutpostTO outpostTO = new OutpostTOBuilder().withPhoneNumber(123456789L)
+                .withEmail("out1@gmail.com").withStreet("Mokebe")
+                .withPostalCode(21345).withCity("New York").build();
+        OutpostTO savedOutpost = outpostService.addOutpost(outpostTO);
+
+        WorkerTO worker = new WorkerTO().builder().dateOfBirth(new Date()).occupation("manager").street("asd").postalCode(12345)
+                .phoneNumber(987654321L).firstName("Seba").lastName("Kox").city("qwe").build();
+
+        WorkerTO savedWorker = workerService.addWorker(worker);
+        WorkerTO savedWorker2 = workerService.addWorker(worker);
+        WorkerTO savedWorker3 = workerService.addWorker(worker);
+        WorkerTO savedWorker4 = workerService.addWorker(worker);
+        outpostService.addWorkerToOutpost(savedOutpost, savedWorker);
+        outpostService.addWorkerToOutpost(savedOutpost, savedWorker2);
+        outpostService.addWorkerToOutpost(savedOutpost, savedWorker3);
+        outpostService.addWorkerToOutpost(savedOutpost, savedWorker4);
+
+        //when
+        List<WorkerTO> workers = outpostService.findWorkersByOutpost(savedOutpost);
+
+        //then
+        assertThat(workers.size()).isEqualTo(4);
+    }
 }

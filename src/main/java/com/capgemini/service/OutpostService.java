@@ -21,4 +21,6 @@ public interface OutpostService {
     void addWorkerToOutpost(OutpostTO outpost, WorkerTO worker);
 
     void removeWorkerFromOutpost(OutpostTO outpost, WorkerTO worker);
+
+    List<WorkerTO> findWorkersByOutpost(OutpostTO outpost);
 }

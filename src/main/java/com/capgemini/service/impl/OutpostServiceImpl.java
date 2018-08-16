@@ -90,5 +90,19 @@ public class OutpostServiceImpl implements OutpostService {
         OutpostEntity outpostEntity = outpostRepository.update(OutpostMapper.toOutpostEntity(outpost));
     }
 
+    @Override
+    public List<WorkerTO> findWorkersByOutpost(OutpostTO outpost) {
+        List<WorkerTO> workers;
+
+        if(outpost.getWorkers() != null){
+            workers = outpost.getWorkers();
+        }
+        else {
+            workers = new LinkedList<>();
+        }
+
+        return workers;
+    }
+
 
 }
