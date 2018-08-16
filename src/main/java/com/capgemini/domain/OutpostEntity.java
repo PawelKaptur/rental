@@ -6,7 +6,9 @@ import lombok.Data;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -17,7 +19,6 @@ public class OutpostEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    //osobne entity do adresow?
     @Column(nullable = false, length = 30)
     private String city;
 
@@ -32,4 +33,7 @@ public class OutpostEntity {
 
     @Column(length = 50)
     private String email;
+
+    @OneToMany
+    private List<WorkerEntity> workers;
 }

@@ -20,6 +20,9 @@ public class OutpostMapper {
         outpostEntity.setPhoneNumber(outpost.getPhoneNumber());
         outpostEntity.setPostalCode(outpost.getPostalCode());
         outpostEntity.setStreet(outpost.getStreet());
+        if(outpost.getWorkers() != null){
+            outpostEntity.setWorkers(WorkerMapper.toWorkerEntityList(outpost.getWorkers()));
+        }
 
         return outpostEntity;
     }
@@ -29,10 +32,19 @@ public class OutpostMapper {
             return null;
         }
 
+        if(outpostEntity.getWorkers() != null) {
+            return new OutpostTOBuilder().withId(outpostEntity.getId()).withCity(outpostEntity.getCity())
+                    .withPostalCode(outpostEntity.getPostalCode()).withStreet(outpostEntity.getStreet())
+                    .withEmail(outpostEntity.getEmail()).withPhoneNumber(outpostEntity.getPhoneNumber())
+                    .withWorkers(WorkerMapper.toWorkerTOList(outpostEntity.getWorkers()))
+                    .build();
+        }
+
         return new OutpostTOBuilder().withId(outpostEntity.getId()).withCity(outpostEntity.getCity())
                 .withPostalCode(outpostEntity.getPostalCode()).withStreet(outpostEntity.getStreet())
                 .withEmail(outpostEntity.getEmail()).withPhoneNumber(outpostEntity.getPhoneNumber())
                 .build();
+
     }
 
     public static List<OutpostTO> toOutpostTOList(List<OutpostEntity> outposts) {

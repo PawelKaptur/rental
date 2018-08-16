@@ -31,8 +31,7 @@ public class WorkerMapper {
         workerEntity.setStreet(worker.getStreet());
         //workerEntity.setWorkplaceId(worker.getWorkplaceId());
         //workerEntity.setWorkplaceId(OutpostMapper.toOutpostEntity(outpostService.findOutpostById(worker.getWorkplaceId())));
-        workerEntity.setWorkplaceId(OutpostMapper.toOutpostEntity(worker.getWorkplaceId()));
-
+        //workerEntity.setWorkplaceId(OutpostMapper.toOutpostEntity(worker.getWorkplaceId()));
 
         return workerEntity;
     }
@@ -51,15 +50,21 @@ public class WorkerMapper {
                 .withDateOfBirth(workerEntity.getDateOfBirth()).withWorkplaceId(OutpostMapper.toOutpostTO(workerEntity.getWorkplaceId()))
                 .build();*/
 
+
+        // .workplaceId(OutpostMapper.toOutpostTO(workerEntity.getWorkplaceId()))
         return new WorkerTO().builder().id(workerEntity.getId()).city(workerEntity.getCity())
                 .firstName(workerEntity.getFirstName()).lastName(workerEntity.getLastName())
                 .phoneNumber(workerEntity.getPhoneNumber()).postalCode(workerEntity.getPostalCode())
                 .street(workerEntity.getStreet()).occupation(workerEntity.getOccupation())
-                .dateOfBirth(workerEntity.getDateOfBirth()).workplaceId(OutpostMapper.toOutpostTO(workerEntity.getWorkplaceId()))
+                .dateOfBirth(workerEntity.getDateOfBirth())
                 .build();
     }
 
     public static List<WorkerTO> toWorkerTOList(List<WorkerEntity> workers) {
         return workers.stream().map(WorkerMapper::toWorkerTO).collect(Collectors.toList());
+    }
+
+    public static List<WorkerEntity> toWorkerEntityList(List<WorkerTO> workers) {
+        return workers.stream().map(WorkerMapper::toWorkerEntity).collect(Collectors.toList());
     }
 }

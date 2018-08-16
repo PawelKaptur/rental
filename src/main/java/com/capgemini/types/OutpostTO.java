@@ -3,6 +3,9 @@ package com.capgemini.types;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.util.Collection;
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 public class OutpostTO {
@@ -14,6 +17,8 @@ public class OutpostTO {
     private Long phoneNumber;
     private String email;
 
+    private List<WorkerTO> workers;
+
     public static class OutpostTOBuilder{
         private Long id;
         private String city;
@@ -21,6 +26,7 @@ public class OutpostTO {
         private Integer postalCode;
         private Long phoneNumber;
         private String email;
+        private List<WorkerTO> workers;
 
         public OutpostTOBuilder(){
 
@@ -56,8 +62,13 @@ public class OutpostTO {
             return this;
         }
 
+        public OutpostTOBuilder withWorkers(List<WorkerTO> workers){
+            this.workers = workers;
+            return this;
+        }
+
         public OutpostTO build(){
-            return new OutpostTO(id, city, street, postalCode, phoneNumber, email);
+            return new OutpostTO(id, city, street, postalCode, phoneNumber, email, workers);
         }
     }
 }

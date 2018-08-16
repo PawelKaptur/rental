@@ -1,6 +1,7 @@
 package com.capgemini.service;
 
 import com.capgemini.types.OutpostTO;
+import com.capgemini.types.WorkerTO;
 
 import java.util.List;
 
@@ -15,5 +16,7 @@ public interface OutpostService {
 
     void deleteOutpost(Long id);
 
-    OutpostTO updateOutpust(OutpostTO outpost);
+    OutpostTO updateOutpost(OutpostTO outpost);
+
+    void addWorkerToOutpost(OutpostTO outpost, WorkerTO worker);
 }

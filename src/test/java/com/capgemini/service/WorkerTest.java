@@ -1,3 +1,4 @@
+/*
 package com.capgemini.service;
 
 import com.capgemini.domain.WorkerEntity;
@@ -40,12 +41,14 @@ public class WorkerTest {
                 .withPostalCode(21345).withCity("New York").build();
         OutpostTO savedOutpost = outpostService.addOutpost(outpostTO);
 
-       /* WorkerTO worker = new WorkerTO().builder().dateOfBirth(new Date()).withOccupation("manager").withStreet("asd").withPostalCode(12345)
-                .withPhoneNumber(987654321L).withFirstName("Seba").withLastName("Kox").withCity("qwe").withWorkplaceId(savedOutpost).build();*/
+       */
+/* WorkerTO worker = new WorkerTO().builder().dateOfBirth(new Date()).withOccupation("manager").withStreet("asd").withPostalCode(12345)
+                .withPhoneNumber(987654321L).withFirstName("Seba").withLastName("Kox").withCity("qwe").withWorkplaceId(savedOutpost).build();*//*
+
 
         WorkerTO worker = new WorkerTO().builder().dateOfBirth(new Date()).occupation("manager").street("asd").postalCode(12345)
-                .phoneNumber(987654321L).firstName("Seba").lastName("Kox").city("qwe").workplaceId(savedOutpost).build();
-
+                .phoneNumber(987654321L).firstName("Seba").lastName("Kox").city("qwe").build();
+        //.workplaceId(savedOutpost)
         WorkerTO savedWorker = workerService.addWorker(worker);
 
         //when
@@ -55,7 +58,8 @@ public class WorkerTest {
         assertThat(selectedWorker.getId()).isEqualTo(savedWorker.getId());
     }
 
-    @Test
+*/
+/*    @Test
     public void shouldDeleteWorkerFromOutpost(){
         //given
         OutpostTO outpostTO = new OutpostTO.OutpostTOBuilder().withPhoneNumber(123456789L)
@@ -74,7 +78,8 @@ public class WorkerTest {
 
         //then
         assertThat(selectedWorker.getWorkplaceId()).isNull();
-    }
+    }*//*
+
 
     @Test
     public void shouldFindAllWorkers(){
@@ -86,7 +91,7 @@ public class WorkerTest {
 
         WorkerTO worker = new WorkerTO().builder().dateOfBirth(new Date()).occupation("manager").street("asd").postalCode(12345)
                 .phoneNumber(987654321L).firstName("Seba").lastName("Kox").city("qwe").workplaceId(savedOutpost).build();
-
+        //.workplaceId(savedOutpost)
         workerService.addWorker(worker);
         workerService.addWorker(worker);
         workerService.addWorker(worker);
@@ -119,4 +124,38 @@ public class WorkerTest {
         //then
         assertThat(workerService.findAllWorkers()).isEmpty();
     }
+
+    @Test
+    public void shouldFindWorkersByOutpost(){
+        //given
+        OutpostTO outpostTO = new OutpostTO.OutpostTOBuilder().withPhoneNumber(123456789L)
+                .withEmail("out1@gmail.com").withStreet("Mokebe")
+                .withPostalCode(21345).withCity("New York").build();
+        OutpostTO savedOutpost = outpostService.addOutpost(outpostTO);
+        OutpostTO savedOutpost2 = outpostService.addOutpost(outpostTO);
+
+        Long id = savedOutpost.getId();
+
+        WorkerTO worker = new WorkerTO().builder().dateOfBirth(new Date()).occupation("manager").street("asd").postalCode(12345)
+                .phoneNumber(987654321L).firstName("Seba").lastName("Kox").city("qwe").workplaceId(savedOutpost).build();
+        WorkerTO worker2 = new WorkerTO().builder().dateOfBirth(new Date()).occupation("manager").street("asd").postalCode(12345)
+                .phoneNumber(987654321L).firstName("Seba").lastName("Kox").city("qwe").workplaceId(savedOutpost2).build();
+
+        workerService.addWorker(worker);
+        workerService.addWorker(worker);
+        workerService.addWorker(worker);
+
+        workerService.addWorker(worker2);
+        workerService.addWorker(worker2);
+
+        //when
+        List<WorkerTO> workers = workerService.findWorkersByOutpost(savedOutpost);
+        List<WorkerTO> workers2 = workerService.findWorkersByOutpost(savedOutpost2);
+
+        //then
+
+        assertThat(workers.size()).isEqualTo(3);
+        assertThat(workers2.size()).isEqualTo(2);
+    }
 }
+*/

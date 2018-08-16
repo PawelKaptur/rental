@@ -20,7 +20,7 @@ public class WorkerTO {
 
     //outpostentity czy dao, czy id, na razie id, relacje dodac
     //private Long workplaceId;
-    private OutpostTO workplaceId;
+    //private OutpostTO workplaceId;
     private Date dateOfBirth;
     private String city;
     private String street;

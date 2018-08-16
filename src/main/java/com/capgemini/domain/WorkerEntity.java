@@ -24,11 +24,9 @@ public class WorkerEntity {
     @Column(nullable = false)
     private String occupation;
 
-    //pomyslec nad relacja, na razie po id
     @ManyToOne
     @JoinColumn(name = "workplace_id", referencedColumnName = "id")
     private OutpostEntity workplaceId;
-    //private Long workplaceId;
 
     @Column(nullable = false)
     private Date dateOfBirth;

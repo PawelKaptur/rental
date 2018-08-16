@@ -2,13 +2,16 @@ package com.capgemini.service;
 
 import com.capgemini.types.OutpostTO;
 import com.capgemini.types.OutpostTO.OutpostTOBuilder;
+import com.capgemini.types.WorkerTO;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Date;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,6 +22,9 @@ public class OutpostTest {
 
     @Autowired
     private OutpostService outpostService;
+
+    @Autowired
+    private WorkerService workerService;
 
     @Before
     public void setUp(){
@@ -116,8 +122,33 @@ public class OutpostTest {
         //when
         OutpostTO selectedOutpost = outpostService.findOutpostById(savedOutpost.getId());
         selectedOutpost.setStreet(street);
-        outpostService.updateOutpust(selectedOutpost);
+        outpostService.updateOutpost(selectedOutpost);
 
         //then
-        assertThat(outpostService.findOutpostById(selectedOutpost.getId()).getStreet()).isEqualTo(street); }
+        assertThat(outpostService.findOutpostById(selectedOutpost.getId()).getStreet()).isEqualTo(street);
+    }
+
+    @Test
+    public void addWorkerToOutpost() {
+        //given
+        String street = "Marcelinska";
+        OutpostTO outpostTO = new OutpostTOBuilder().withPhoneNumber(123456789L)
+                .withEmail("out1@gmail.com").withStreet("Mokebe")
+                .withPostalCode(21345).withCity("New York").build();
+        OutpostTO savedOutpost = outpostService.addOutpost(outpostTO);
+
+        WorkerTO worker = new WorkerTO().builder().dateOfBirth(new Date()).occupation("manager").street("asd").postalCode(12345)
+                .phoneNumber(987654321L).firstName("Seba").lastName("Kox").city("qwe").build();
+
+        WorkerTO savedWorker = workerService.addWorker(worker);
+        WorkerTO savedWorker2 = workerService.addWorker(worker);
+
+        //when
+        outpostService.addWorkerToOutpost(savedOutpost, savedWorker);
+        outpostService.addWorkerToOutpost(savedOutpost, savedWorker2);
+
+        //then
+        assertThat(outpostService.findOutpostById(savedOutpost.getId()).getWorkers().size()).isEqualTo(2);
+    }
+
 }
