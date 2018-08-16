@@ -4,6 +4,7 @@ import com.capgemini.domain.WorkerEntity;
 import com.capgemini.types.OutpostTO;
 import com.capgemini.types.WorkerTO;
 import com.capgemini.types.WorkerTO.WorkerTOBuilder;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -23,6 +25,12 @@ public class WorkerTest {
 
     @Autowired
     private OutpostService outpostService;
+
+    @Before
+    public void setUp(){
+        workerService.deleteAll();
+    }
+
 
     @Test
     public void shouldFindWorkerById(){
@@ -38,7 +46,6 @@ public class WorkerTest {
         WorkerTO worker = new WorkerTO().builder().dateOfBirth(new Date()).occupation("manager").street("asd").postalCode(12345)
                 .phoneNumber(987654321L).firstName("Seba").lastName("Kox").city("qwe").workplaceId(savedOutpost).build();
 
-        System.out.println(worker);
         WorkerTO savedWorker = workerService.addWorker(worker);
 
         //when
@@ -46,5 +53,70 @@ public class WorkerTest {
 
         //then
         assertThat(selectedWorker.getId()).isEqualTo(savedWorker.getId());
+    }
+
+    @Test
+    public void shouldDeleteWorkerFromOutpost(){
+        //given
+        OutpostTO outpostTO = new OutpostTO.OutpostTOBuilder().withPhoneNumber(123456789L)
+                .withEmail("out1@gmail.com").withStreet("Mokebe")
+                .withPostalCode(21345).withCity("New York").build();
+        OutpostTO savedOutpost = outpostService.addOutpost(outpostTO);
+
+        WorkerTO worker = new WorkerTO().builder().dateOfBirth(new Date()).occupation("manager").street("asd").postalCode(12345)
+                .phoneNumber(987654321L).firstName("Seba").lastName("Kox").city("qwe").workplaceId(savedOutpost).build();
+
+        WorkerTO savedWorker = workerService.addWorker(worker);
+
+        //when
+        workerService.deleteWorkerFromOutpost(savedWorker);
+        WorkerTO selectedWorker = workerService.findWorkerById(savedWorker.getId());
+
+        //then
+        assertThat(selectedWorker.getWorkplaceId()).isNull();
+    }
+
+    @Test
+    public void shouldFindAllWorkers(){
+        //given
+        OutpostTO outpostTO = new OutpostTO.OutpostTOBuilder().withPhoneNumber(123456789L)
+                .withEmail("out1@gmail.com").withStreet("Mokebe")
+                .withPostalCode(21345).withCity("New York").build();
+        OutpostTO savedOutpost = outpostService.addOutpost(outpostTO);
+
+        WorkerTO worker = new WorkerTO().builder().dateOfBirth(new Date()).occupation("manager").street("asd").postalCode(12345)
+                .phoneNumber(987654321L).firstName("Seba").lastName("Kox").city("qwe").workplaceId(savedOutpost).build();
+
+        workerService.addWorker(worker);
+        workerService.addWorker(worker);
+        workerService.addWorker(worker);
+
+        //when
+        List<WorkerTO> workers = workerService.findAllWorkers();
+
+        //then
+        assertThat(workers.size()).isEqualTo(3);
+    }
+
+    @Test
+    public void shouldDeleteAllWorkers(){
+        //given
+        OutpostTO outpostTO = new OutpostTO.OutpostTOBuilder().withPhoneNumber(123456789L)
+                .withEmail("out1@gmail.com").withStreet("Mokebe")
+                .withPostalCode(21345).withCity("New York").build();
+        OutpostTO savedOutpost = outpostService.addOutpost(outpostTO);
+
+        WorkerTO worker = new WorkerTO().builder().dateOfBirth(new Date()).occupation("manager").street("asd").postalCode(12345)
+                .phoneNumber(987654321L).firstName("Seba").lastName("Kox").city("qwe").workplaceId(savedOutpost).build();
+
+        workerService.addWorker(worker);
+        workerService.addWorker(worker);
+        workerService.addWorker(worker);
+
+        //when
+        workerService.deleteAll();
+
+        //then
+        assertThat(workerService.findAllWorkers()).isEmpty();
     }
 }

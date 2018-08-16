@@ -6,6 +6,9 @@ package com.capgemini.mappers;
         import com.capgemini.types.WorkerTO.WorkerTOBuilder;
         import org.springframework.beans.factory.annotation.Autowired;
 
+        import java.util.List;
+        import java.util.stream.Collectors;
+
 public class WorkerMapper {
 
 /*    @Autowired
@@ -54,5 +57,9 @@ public class WorkerMapper {
                 .street(workerEntity.getStreet()).occupation(workerEntity.getOccupation())
                 .dateOfBirth(workerEntity.getDateOfBirth()).workplaceId(OutpostMapper.toOutpostTO(workerEntity.getWorkplaceId()))
                 .build();
+    }
+
+    public static List<WorkerTO> toWorkerTOList(List<WorkerEntity> workers) {
+        return workers.stream().map(WorkerMapper::toWorkerTO).collect(Collectors.toList());
     }
 }
