@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "CAR")
+@Table(name = "car")
 @Data
 public class CarEntity {
 
@@ -15,7 +15,6 @@ public class CarEntity {
     @GeneratedValue
     private Long id;
 
-    //enum?
     @Column(nullable = false)
     private String type;
 

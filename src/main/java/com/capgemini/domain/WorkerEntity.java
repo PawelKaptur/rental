@@ -1,16 +1,14 @@
 package com.capgemini.domain;
 
 
-import lombok.AccessLevel;
 import lombok.Data;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Data
-@Table(name = "workers")
+@Table(name = "worker")
 public class WorkerEntity {
 
     @Id
@@ -23,13 +21,14 @@ public class WorkerEntity {
     @Column(nullable = false, length = 30)
     private String lastName;
 
-    //moze enum
     @Column(nullable = false)
     private String occupation;
 
     //pomyslec nad relacja, na razie po id
-    //@ManyToOne
-    private Long workplaceId;
+    @ManyToOne
+    @JoinColumn(name = "workplace_id", referencedColumnName = "id")
+    private OutpostEntity workplaceId;
+    //private Long workplaceId;
 
     @Column(nullable = false)
     private Date dateOfBirth;

@@ -1,10 +1,15 @@
 package com.capgemini.mappers;
 
-import com.capgemini.domain.WorkerEntity;
-import com.capgemini.types.WorkerTO;
-import com.capgemini.types.WorkerTO.WorkerTOBuilder;
+        import com.capgemini.domain.WorkerEntity;
+        import com.capgemini.service.OutpostService;
+        import com.capgemini.types.WorkerTO;
+        import com.capgemini.types.WorkerTO.WorkerTOBuilder;
+        import org.springframework.beans.factory.annotation.Autowired;
 
 public class WorkerMapper {
+
+/*    @Autowired
+    private static OutpostService outpostService;*/
 
     public static WorkerEntity toWorkerEntity(WorkerTO worker) {
         if (worker == null){
@@ -21,7 +26,10 @@ public class WorkerMapper {
         workerEntity.setPhoneNumber(worker.getPhoneNumber());
         workerEntity.setPostalCode(worker.getPostalCode());
         workerEntity.setStreet(worker.getStreet());
-        workerEntity.setWorkplaceId(worker.getWorkplaceId());
+        //workerEntity.setWorkplaceId(worker.getWorkplaceId());
+        //workerEntity.setWorkplaceId(OutpostMapper.toOutpostEntity(outpostService.findOutpostById(worker.getWorkplaceId())));
+        workerEntity.setWorkplaceId(OutpostMapper.toOutpostEntity(worker.getWorkplaceId()));
+
 
         return workerEntity;
     }
@@ -31,11 +39,20 @@ public class WorkerMapper {
             return null;
         }
 
-        return new WorkerTOBuilder().withId(workerEntity.getId()).withCity(workerEntity.getCity())
+        //withWorkplaceId(workerEntity.getWorkplaceId())
+        //withWorkplaceId(workerEntity.getWorkplaceId().getId())
+/*        return new WorkerTOBuilder().withId(workerEntity.getId()).withCity(workerEntity.getCity())
                 .withFirstName(workerEntity.getFirstName()).withLastName(workerEntity.getLastName())
                 .withPhoneNumber(workerEntity.getPhoneNumber()).withPostalCode(workerEntity.getPostalCode())
                 .withStreet(workerEntity.getStreet()).withOccupation(workerEntity.getOccupation())
-                .withDateOfBirth(workerEntity.getDateOfBirth()).withWorkplaceId(workerEntity.getWorkplaceId())
+                .withDateOfBirth(workerEntity.getDateOfBirth()).withWorkplaceId(OutpostMapper.toOutpostTO(workerEntity.getWorkplaceId()))
+                .build();*/
+
+        return new WorkerTO().builder().id(workerEntity.getId()).city(workerEntity.getCity())
+                .firstName(workerEntity.getFirstName()).lastName(workerEntity.getLastName())
+                .phoneNumber(workerEntity.getPhoneNumber()).postalCode(workerEntity.getPostalCode())
+                .street(workerEntity.getStreet()).occupation(workerEntity.getOccupation())
+                .dateOfBirth(workerEntity.getDateOfBirth()).workplaceId(OutpostMapper.toOutpostTO(workerEntity.getWorkplaceId()))
                 .build();
     }
 }
