@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class OupostDaoImpl extends AbstractDao<OutpostEntity, Long> implements OutpostDao {
+
+
 }

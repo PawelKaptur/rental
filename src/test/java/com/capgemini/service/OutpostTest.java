@@ -172,7 +172,7 @@ public class OutpostTest {
         //when
         outpostService.removeWorkerFromOutpost(savedOutpost, savedWorker);
 
-        //
+        //then
         assertThat(outpostService.findOutpostById(savedOutpost.getId()).getWorkers().size()).isEqualTo(1);
     }
 

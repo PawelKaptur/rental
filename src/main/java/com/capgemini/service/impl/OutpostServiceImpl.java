@@ -3,6 +3,7 @@ package com.capgemini.service.impl;
 import com.capgemini.dao.OutpostDao;
 import com.capgemini.domain.OutpostEntity;
 import com.capgemini.mappers.OutpostMapper;
+import com.capgemini.mappers.WorkerMapper;
 import com.capgemini.service.OutpostService;
 import com.capgemini.types.OutpostTO;
 import com.capgemini.types.WorkerTO;
@@ -59,35 +60,21 @@ public class OutpostServiceImpl implements OutpostService {
     @Override
     @Transactional(readOnly = false)
     public void addWorkerToOutpost(OutpostTO outpost, WorkerTO worker) {
-        List<WorkerTO> workers;
-
-        if(outpost.getWorkers() != null){
-             workers = outpost.getWorkers();
-        }
-        else {
-            workers = new LinkedList<>();
-        }
+        List<WorkerTO> workers = findWorkersByOutpost(outpost);
 
         workers.add(worker);
         outpost.setWorkers(workers);
-        OutpostEntity outpostEntity = outpostRepository.update(OutpostMapper.toOutpostEntity(outpost));
+        outpostRepository.update(OutpostMapper.toOutpostEntity(outpost));
     }
 
     @Override
     @Transactional(readOnly = false)
     public void removeWorkerFromOutpost(OutpostTO outpost, WorkerTO worker) {
-        List<WorkerTO> workers;
-
-        if(outpost.getWorkers() != null){
-            workers = outpost.getWorkers();
-        }
-        else {
-            workers = new LinkedList<>();
-        }
+        List<WorkerTO> workers = findWorkersByOutpost(outpost);
 
         workers.remove(worker);
         outpost.setWorkers(workers);
-        OutpostEntity outpostEntity = outpostRepository.update(OutpostMapper.toOutpostEntity(outpost));
+        outpostRepository.update(OutpostMapper.toOutpostEntity(outpost));
     }
 
     @Override
@@ -103,6 +90,5 @@ public class OutpostServiceImpl implements OutpostService {
 
         return workers;
     }
-
 
 }
