@@ -40,8 +40,6 @@ public class OutpostMapper {
         return outpostTOBuilder.build();
     }
 
-
-
     public static List<OutpostTO> toOutpostTOList(List<OutpostEntity> outposts) {
         return outposts.stream().map(OutpostMapper::toOutpostTO).collect(Collectors.toList());
     }

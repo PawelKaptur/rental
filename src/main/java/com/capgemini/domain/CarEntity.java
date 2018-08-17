@@ -43,6 +43,9 @@ public class CarEntity {
     @ManyToMany
     private List<WorkerEntity> wardens;
 
+    @OneToMany(cascade = CascadeType.REMOVE)
+    private List<RentalEntity> rentals;
+
     @Column(nullable = false)
     private Date dateOfCreating;
 

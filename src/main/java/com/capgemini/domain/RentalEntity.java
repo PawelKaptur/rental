@@ -10,7 +10,7 @@ import java.util.Date;
 
 @Entity
 @Data
-@Table(name = "rentals")
+@Table(name = "rental")
 public class RentalEntity {
 
 
@@ -20,9 +20,11 @@ public class RentalEntity {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "client_id", referencedColumnName = "id")
     private ClientEntity clientId;
 
     @ManyToOne
+    @JoinColumn(name = "car_id", referencedColumnName = "id")
     private CarEntity carId;
 
     @Column(nullable = false)

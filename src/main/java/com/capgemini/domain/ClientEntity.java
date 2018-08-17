@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -44,6 +45,9 @@ public class ClientEntity {
 
     @Column(nullable = false, length = 16)
     private String creditCardNumber;
+
+    @OneToMany
+    private List<RentalEntity> rentals;
 
     @Column(nullable = false)
     private Date dateOfCreating;
