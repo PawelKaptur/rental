@@ -1,13 +1,13 @@
 package com.capgemini.mappers;
 
-        import com.capgemini.domain.WorkerEntity;
-        import com.capgemini.service.OutpostService;
-        import com.capgemini.types.WorkerTO;
-        import com.capgemini.types.WorkerTO.WorkerTOBuilder;
-        import org.springframework.beans.factory.annotation.Autowired;
+import com.capgemini.domain.WorkerEntity;
+import com.capgemini.service.OutpostService;
+import com.capgemini.types.WorkerTO;
+import com.capgemini.types.WorkerTO.WorkerTOBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 
-        import java.util.List;
-        import java.util.stream.Collectors;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class WorkerMapper {
 
@@ -15,7 +15,7 @@ public class WorkerMapper {
     private static OutpostService outpostService;*/
 
     public static WorkerEntity toWorkerEntity(WorkerTO worker) {
-        if (worker == null){
+        if (worker == null) {
             return null;
         }
 
@@ -37,21 +37,19 @@ public class WorkerMapper {
     }
 
     public static WorkerTO toWorkerTO(WorkerEntity workerEntity) {
-        if(workerEntity == null){
+        if (workerEntity == null) {
             return null;
         }
 
-        //withWorkplaceId(workerEntity.getWorkplaceId())
-        //withWorkplaceId(workerEntity.getWorkplaceId().getId())
-/*        return new WorkerTOBuilder().withId(workerEntity.getId()).withCity(workerEntity.getCity())
-                .withFirstName(workerEntity.getFirstName()).withLastName(workerEntity.getLastName())
-                .withPhoneNumber(workerEntity.getPhoneNumber()).withPostalCode(workerEntity.getPostalCode())
-                .withStreet(workerEntity.getStreet()).withOccupation(workerEntity.getOccupation())
-                .withDateOfBirth(workerEntity.getDateOfBirth()).withWorkplaceId(OutpostMapper.toOutpostTO(workerEntity.getWorkplaceId()))
-                .build();*/
+        if (workerEntity.getWorkplaceId() != null) {
+            return new WorkerTO().builder().id(workerEntity.getId()).city(workerEntity.getCity())
+                    .firstName(workerEntity.getFirstName()).lastName(workerEntity.getLastName())
+                    .phoneNumber(workerEntity.getPhoneNumber()).postalCode(workerEntity.getPostalCode())
+                    .street(workerEntity.getStreet()).occupation(workerEntity.getOccupation())
+                    .dateOfBirth(workerEntity.getDateOfBirth()).workplaceId(workerEntity.getWorkplaceId().getId())
+                    .build();
+        }
 
-
-        // .workplaceId(OutpostMapper.toOutpostTO(workerEntity.getWorkplaceId()))
         return new WorkerTO().builder().id(workerEntity.getId()).city(workerEntity.getCity())
                 .firstName(workerEntity.getFirstName()).lastName(workerEntity.getLastName())
                 .phoneNumber(workerEntity.getPhoneNumber()).postalCode(workerEntity.getPostalCode())

@@ -149,6 +149,7 @@ public class OutpostTest {
         outpostService.addWorkerToOutpost(savedOutpost, savedWorker2);
 
         //then
+        System.out.println(workerService.findAllWorkers());
         assertThat(outpostService.findOutpostById(savedOutpost.getId()).getWorkers().size()).isEqualTo(2);
     }
 

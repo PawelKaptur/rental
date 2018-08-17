@@ -25,13 +25,13 @@ public class OutpostServiceImpl implements OutpostService {
 
     private OutpostDao outpostRepository;
     private WorkerService workerService;
-    private WorkerDao workerDao;
+    private WorkerDao workerRepository;
 
     @Autowired
-    public OutpostServiceImpl(OutpostDao outpostRepository, WorkerService workerService, WorkerDao workerDao) {
+    public OutpostServiceImpl(OutpostDao outpostRepository, WorkerService workerService, WorkerDao workerRepository) {
         this.outpostRepository = outpostRepository;
         this.workerService = workerService;
-        this.workerDao = workerDao;
+        this.workerRepository = workerRepository;
     }
 
     @Override
@@ -63,6 +63,8 @@ public class OutpostServiceImpl implements OutpostService {
         outpostRepository.delete(id);
     }
 
+
+    //bede musial zmienic na bank
     @Override
     @Transactional(readOnly = false)
     public OutpostTO updateOutpost(OutpostTO outpost) {
@@ -70,19 +72,6 @@ public class OutpostServiceImpl implements OutpostService {
         return OutpostMapper.toOutpostTO(outpostEntity);
     }
 
-    //prawie spoko bez entity w serwisie
-/*    @Override
-    @Transactional(readOnly = false)
-    public void addWorkerToOutpost(OutpostTO outpost, WorkerTO worker) {
-        List<WorkerTO> workers = findWorkersByOutpost(outpost);
-
-        workers.add(worker);
-        //outpost.setWorkers(workers);
-        outpost.setWorkers(workers.stream().map(w -> w.getId()).collect(Collectors.toList()));
-        outpostRepository.update(OutpostMapper.toOutpostEntity(outpost));
-    }*/
-
-    //z entity w serwisie
     @Override
     @Transactional(readOnly = false)
     public void addWorkerToOutpost(OutpostTO outpost, WorkerTO worker) {
@@ -91,13 +80,16 @@ public class OutpostServiceImpl implements OutpostService {
 
 
         for(WorkerTO w: workers){
-            workersEntities.add(workerDao.findOne(w.getId()));
+            workersEntities.add(workerRepository.findOne(w.getId()));
         }
 
-        WorkerEntity addedWorker = workerDao.findOne(worker.getId());
-        workersEntities.add(addedWorker);
-
         OutpostEntity outpostEntity = outpostRepository.findOne(outpost.getId());
+        WorkerEntity addedWorker = workerRepository.findOne(worker.getId());
+
+        addedWorker.setWorkplaceId(outpostEntity);
+        workerRepository.update(addedWorker);
+
+        workersEntities.add(addedWorker);
         outpostEntity.setWorkers(workersEntities);
         outpostRepository.update(outpostEntity);
     }
@@ -112,30 +104,6 @@ public class OutpostServiceImpl implements OutpostService {
         outpost.setWorkers(workers.stream().map(w -> w.getId()).collect(Collectors.toList()));
         outpostRepository.update(OutpostMapper.toOutpostEntity(outpost));
     }
-
-    //stara wersja na razie zostawic
-/*    @Override
-    public List<WorkerTO> findWorkersByOutpost(OutpostTO outpost) {
-        //List<WorkerTO> workers;
-        List<Long> workers;
-
-        if(outpost.getWorkers() != null){
-            workers = outpost.getWorkers();
-        }
-        else {
-            workers = new LinkedList<>();
-        }
-
-
-        List<WorkerTO> workersTO = new ArrayList<>(); // = workerService.findAllWorkers().stream().filter(w -> w.getId() == workers.stream().findAny())
-
-        for(Long id: workers){
-            workersTO.add(workerService.findWorkerById(id));
-        }
-
-
-        return workersTO;
-    }*/
 
     @Override
     public List<WorkerTO> findWorkersByOutpost(OutpostTO outpost) {
