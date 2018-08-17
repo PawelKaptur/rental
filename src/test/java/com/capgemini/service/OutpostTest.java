@@ -191,10 +191,12 @@ public class OutpostTest {
         WorkerTO savedWorker2 = workerService.addWorker(worker);
         WorkerTO savedWorker3 = workerService.addWorker(worker);
         WorkerTO savedWorker4 = workerService.addWorker(worker);
+
         outpostService.addWorkerToOutpost(savedOutpost, savedWorker);
         outpostService.addWorkerToOutpost(savedOutpost, savedWorker2);
         outpostService.addWorkerToOutpost(savedOutpost, savedWorker3);
         outpostService.addWorkerToOutpost(savedOutpost, savedWorker4);
+
 
         //when
         List<WorkerTO> workers = outpostService.findWorkersByOutpost(savedOutpost);

@@ -17,7 +17,8 @@ public class OutpostTO {
     private Long phoneNumber;
     private String email;
 
-    private List<WorkerTO> workers;
+    //private List<WorkerTO> workers;
+    private List<Long> workers;
 
     public static class OutpostTOBuilder{
         private Long id;
@@ -26,7 +27,8 @@ public class OutpostTO {
         private Integer postalCode;
         private Long phoneNumber;
         private String email;
-        private List<WorkerTO> workers;
+        //private List<WorkerTO> workers;
+        private List<Long> workers;
 
         public OutpostTOBuilder(){
 
@@ -62,7 +64,12 @@ public class OutpostTO {
             return this;
         }
 
-        public OutpostTOBuilder withWorkers(List<WorkerTO> workers){
+/*        public OutpostTOBuilder withWorkers(List<WorkerTO> workers){
+            this.workers = workers;
+            return this;
+        }   */
+
+        public OutpostTOBuilder withWorkers(List<Long> workers){
             this.workers = workers;
             return this;
         }

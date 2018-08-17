@@ -17,7 +17,6 @@ public class WorkerDaoImpl extends AbstractDao<WorkerEntity, Long> implements Wo
         TypedQuery<WorkerEntity> query = entityManager.createQuery(
                 "select worker from WorkerEntity worker where worker.workplaceId = :workplaceId", WorkerEntity.class);
         query.setParameter("workplaceId", workplaceId);
-
         return query.getResultList();
     }
 }

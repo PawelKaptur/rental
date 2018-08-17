@@ -3,6 +3,7 @@ package com.capgemini.types;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -19,6 +20,7 @@ public class CarTO {
     private Double engineCapacity;
     private Integer power;
     private Integer course;
+    private List<Long> wardensId;
 
     private Date dateOfCreating;
     private Date dateOfEditing;
@@ -39,6 +41,7 @@ public class CarTO {
         private Integer course;
         private Date dateOfCreating;
         private Date dateOfEditing;
+        private List<Long> wardensId;
 
         public CarTOBuilder() {
 
@@ -99,11 +102,16 @@ public class CarTO {
             return this;
         }
 
+        public CarTOBuilder withWardens(List<Long> wardensId){
+            this.wardensId = wardensId;
+            return this;
+        }
+
         //daty tutaj?
 
         public CarTO build(){
             //check
-            return new CarTO(id, type, brand, model, productionYear, color, engineCapacity, power, course, dateOfCreating, dateOfEditing);
+            return new CarTO(id, type, brand, model, productionYear, color, engineCapacity, power, course, wardensId, dateOfCreating, dateOfEditing);
         }
     }
 }

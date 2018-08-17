@@ -18,8 +18,12 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class WorkerServiceImpl implements WorkerService {
 
-    @Autowired
     private WorkerDao workerRepository;
+
+    @Autowired
+    public WorkerServiceImpl(WorkerDao workerRepository) {
+        this.workerRepository = workerRepository;
+    }
 
     @Override
     public WorkerTO findWorkerById(Long id) {

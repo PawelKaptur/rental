@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "car")
@@ -38,6 +39,9 @@ public class CarEntity {
 
     @Column(nullable = false)
     private Integer course;
+
+    @ManyToMany
+    private List<WorkerEntity> wardens;
 
     @Column(nullable = false)
     private Date dateOfCreating;

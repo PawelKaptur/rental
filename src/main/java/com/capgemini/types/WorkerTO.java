@@ -17,14 +17,13 @@ public class WorkerTO {
     private String firstName;
     private String lastName;
     private String occupation;
-
-    //outpostentity czy dao, czy id, na razie id, relacje dodac
-    //private Long workplaceId;
-    //private OutpostTO workplaceId;
     private Date dateOfBirth;
     private String city;
     private String street;
     private Integer postalCode;
     private Long phoneNumber;
+
+    //private OutpostTO workplaceId;
+    private Long workplaceId;
 
 }

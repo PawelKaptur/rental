@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -42,4 +43,7 @@ public class WorkerEntity {
 
     @Column(nullable = false)
     private Long phoneNumber;
+
+    @ManyToMany
+    private List<CarEntity> cars;
 }
