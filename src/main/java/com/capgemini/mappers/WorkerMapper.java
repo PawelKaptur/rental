@@ -1,18 +1,12 @@
 package com.capgemini.mappers;
 
 import com.capgemini.domain.WorkerEntity;
-import com.capgemini.service.OutpostService;
 import com.capgemini.types.WorkerTO;
-import com.capgemini.types.WorkerTO.WorkerTOBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class WorkerMapper {
-
-/*    @Autowired
-    private static OutpostService outpostService;*/
 
     public static WorkerEntity toWorkerEntity(WorkerTO worker) {
         if (worker == null) {
@@ -29,9 +23,6 @@ public class WorkerMapper {
         workerEntity.setPhoneNumber(worker.getPhoneNumber());
         workerEntity.setPostalCode(worker.getPostalCode());
         workerEntity.setStreet(worker.getStreet());
-        //workerEntity.setWorkplaceId(worker.getWorkplaceId());
-        //workerEntity.setWorkplaceId(OutpostMapper.toOutpostEntity(outpostService.findOutpostById(worker.getWorkplaceId())));
-        //workerEntity.setWorkplaceId(OutpostMapper.toOutpostEntity(worker.getWorkplaceId()));
 
         return workerEntity;
     }

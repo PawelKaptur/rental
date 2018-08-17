@@ -29,20 +29,18 @@ public class OutpostMapper {
             return null;
         }
 
+        OutpostTOBuilder outpostTOBuilder = new OutpostTOBuilder().withId(outpostEntity.getId()).withCity(outpostEntity.getCity())
+                .withPostalCode(outpostEntity.getPostalCode()).withStreet(outpostEntity.getStreet())
+                .withEmail(outpostEntity.getEmail()).withPhoneNumber(outpostEntity.getPhoneNumber());
+
         if (outpostEntity.getWorkers() != null) {
-            return new OutpostTOBuilder().withId(outpostEntity.getId()).withCity(outpostEntity.getCity())
-                    .withPostalCode(outpostEntity.getPostalCode()).withStreet(outpostEntity.getStreet())
-                    .withEmail(outpostEntity.getEmail()).withPhoneNumber(outpostEntity.getPhoneNumber())
-                    .withWorkers(outpostEntity.getWorkers().stream().map(w -> w.getId()).collect(Collectors.toList()))
-                    .build();
+            outpostTOBuilder = outpostTOBuilder.withWorkers(outpostEntity.getWorkers().stream().map(w -> w.getId()).collect(Collectors.toList()));
         }
 
-        return new OutpostTOBuilder().withId(outpostEntity.getId()).withCity(outpostEntity.getCity())
-                .withPostalCode(outpostEntity.getPostalCode()).withStreet(outpostEntity.getStreet())
-                .withEmail(outpostEntity.getEmail()).withPhoneNumber(outpostEntity.getPhoneNumber())
-                .build();
-
+        return outpostTOBuilder.build();
     }
+
+
 
     public static List<OutpostTO> toOutpostTOList(List<OutpostEntity> outposts) {
         return outposts.stream().map(OutpostMapper::toOutpostTO).collect(Collectors.toList());

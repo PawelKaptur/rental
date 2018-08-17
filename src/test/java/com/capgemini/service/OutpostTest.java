@@ -174,6 +174,8 @@ public class OutpostTest {
 
         //then
         assertThat(outpostService.findOutpostById(savedOutpost.getId()).getWorkers().size()).isEqualTo(1);
+        assertThat(workerService.findWorkerById(savedWorker.getId()).getWorkplaceId()).isNull();
+        assertThat(workerService.findWorkerById(savedWorker2.getId()).getWorkplaceId()).isNotNull();
     }
 
     @Test
@@ -202,5 +204,6 @@ public class OutpostTest {
 
         //then
         assertThat(workers.size()).isEqualTo(4);
+        assertThat(workerService.findWorkerById(savedWorker.getId()).getWorkplaceId()).isEqualTo(savedOutpost.getId());
     }
 }

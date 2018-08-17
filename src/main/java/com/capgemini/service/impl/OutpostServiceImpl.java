@@ -63,8 +63,6 @@ public class OutpostServiceImpl implements OutpostService {
         outpostRepository.delete(id);
     }
 
-
-    //bede musial zmienic na bank
     @Override
     @Transactional(readOnly = false)
     public OutpostTO updateOutpost(OutpostTO outpost) {
@@ -102,6 +100,8 @@ public class OutpostServiceImpl implements OutpostService {
         List<WorkerEntity> workerEntities = outpostEntity.getWorkers();
         workerEntities.remove(workerEntity);
 
+        workerEntity.setWorkplaceId(null);
+        workerRepository.update(workerEntity);
         outpostEntity.setWorkers(workerEntities);
         outpostRepository.update(outpostEntity);
     }
