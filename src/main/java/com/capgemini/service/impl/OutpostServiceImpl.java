@@ -78,7 +78,6 @@ public class OutpostServiceImpl implements OutpostService {
         List<WorkerTO> workers = findWorkersByOutpost(outpost);
         List<WorkerEntity> workersEntities = new ArrayList<>();
 
-
         for(WorkerTO w: workers){
             workersEntities.add(workerRepository.findOne(w.getId()));
         }
@@ -97,12 +96,14 @@ public class OutpostServiceImpl implements OutpostService {
     @Override
     @Transactional(readOnly = false)
     public void removeWorkerFromOutpost(OutpostTO outpost, WorkerTO worker) {
-        List<WorkerTO> workers = findWorkersByOutpost(outpost);
+        WorkerEntity workerEntity = workerRepository.findOne(worker.getId());
+        OutpostEntity outpostEntity = outpostRepository.findOne(outpost.getId());
 
-        workers.remove(worker);
-        //outpost.setWorkers(workers);
-        outpost.setWorkers(workers.stream().map(w -> w.getId()).collect(Collectors.toList()));
-        outpostRepository.update(OutpostMapper.toOutpostEntity(outpost));
+        List<WorkerEntity> workerEntities = outpostEntity.getWorkers();
+        workerEntities.remove(workerEntity);
+
+        outpostEntity.setWorkers(workerEntities);
+        outpostRepository.update(outpostEntity);
     }
 
     @Override

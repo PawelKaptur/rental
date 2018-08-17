@@ -3,8 +3,6 @@ package com.capgemini.service;
 import com.capgemini.types.OutpostTO;
 import com.capgemini.types.OutpostTO.OutpostTOBuilder;
 import com.capgemini.types.WorkerTO;
-import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +27,7 @@ public class OutpostTest {
 
     @Test
     @Transactional
-    public void shouldAddOutpost(){
+    public void shouldAddOutpost() {
         //given
         OutpostTO outpostTO = new OutpostTOBuilder().withPhoneNumber(123456789L)
                 .withEmail("out1@gmail.com").withStreet("Mokebe")
@@ -45,7 +43,7 @@ public class OutpostTest {
 
     @Test
     @Transactional
-    public void shouldDeleteAllOutpostFromRepository(){
+    public void shouldDeleteAllOutpostFromRepository() {
         //given
         OutpostTO outpostTO = new OutpostTOBuilder().withPhoneNumber(123456789L)
                 .withEmail("out1@gmail.com").withStreet("Mokebe")
@@ -62,7 +60,7 @@ public class OutpostTest {
 
     @Test
     @Transactional
-    public void shouldFindThreeOutpustsInRepository(){
+    public void shouldFindThreeOutpustsInRepository() {
         //given
         OutpostTO outpostTO = new OutpostTOBuilder().withPhoneNumber(123456789L)
                 .withEmail("out1@gmail.com").withStreet("Mokebe")
@@ -149,13 +147,14 @@ public class OutpostTest {
         outpostService.addWorkerToOutpost(savedOutpost, savedWorker2);
 
         //then
-        System.out.println(workerService.findAllWorkers());
         assertThat(outpostService.findOutpostById(savedOutpost.getId()).getWorkers().size()).isEqualTo(2);
+        assertThat(workerService.findWorkerById(savedWorker.getId()).getWorkplaceId()).isEqualTo(savedOutpost.getId());
+        assertThat(workerService.findWorkerById(savedWorker2.getId()).getWorkplaceId()).isEqualTo(savedOutpost.getId());
     }
 
     @Test
     @Transactional
-    public void shouldRemoveWorkerFromOutpost(){
+    public void shouldRemoveWorkerFromOutpost() {
         //given
         OutpostTO outpostTO = new OutpostTOBuilder().withPhoneNumber(123456789L)
                 .withEmail("out1@gmail.com").withStreet("Mokebe")
@@ -179,7 +178,7 @@ public class OutpostTest {
 
     @Test
     @Transactional
-    public void shouldFindFourWorkers(){
+    public void shouldFindFourWorkers() {
         OutpostTO outpostTO = new OutpostTOBuilder().withPhoneNumber(123456789L)
                 .withEmail("out1@gmail.com").withStreet("Mokebe")
                 .withPostalCode(21345).withCity("New York").build();
@@ -197,7 +196,6 @@ public class OutpostTest {
         outpostService.addWorkerToOutpost(savedOutpost, savedWorker2);
         outpostService.addWorkerToOutpost(savedOutpost, savedWorker3);
         outpostService.addWorkerToOutpost(savedOutpost, savedWorker4);
-
 
         //when
         List<WorkerTO> workers = outpostService.findWorkersByOutpost(savedOutpost);
