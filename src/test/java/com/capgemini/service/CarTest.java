@@ -147,7 +147,7 @@ public class CarTest {
 
     @Test
     @Transactional
-    public void shouldDeleteAllCarsFromRepository(){
+    public void shouldDeleteAllCarsFromRepository() {
         //given
         String brand = "Audi";
         String type = "sedan";
@@ -169,7 +169,7 @@ public class CarTest {
     }
 
     @Test
-    public void shouldAddWardenToCar(){
+    public void shouldAddWardenToCar() {
         //given
         CarTO car = new CarTOBuilder().withBrand("Audi").withType("sedan")
                 .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
@@ -183,13 +183,33 @@ public class CarTest {
 
         //when
         carService.addWardenToCar(savedCar, savedWorker);
-
         List<WorkerTO> workers = carService.findWorkersByCar(carService.findCarById(savedCar.getId()));
-        System.out.println(carService.findAllCars());
 
         //then
         assertThat(workers.size()).isEqualTo(1);
         assertThat(workerService.findWorkerById(savedWorker.getId()).getCars().get(0)).isEqualTo(savedCar.getId());
     }
 
+    @Test
+    public void shouldFindCarsByWarden() {
+        //given
+        CarTO car = new CarTOBuilder().withBrand("Audi").withType("sedan")
+                .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
+                .withProductionYear(2015).build();
+        CarTO savedCar = carService.addCar(car);
+        CarTO savedCar2 = carService.addCar(car);
+
+        WorkerTO worker = new WorkerTO().builder().dateOfBirth(new Date()).occupation("manager").street("asd").postalCode(12345)
+                .phoneNumber(987654321L).firstName("Seba").lastName("Kox").city("qwe").build();
+
+        WorkerTO savedWorker = workerService.addWorker(worker);
+
+        //when
+        carService.addWardenToCar(savedCar, savedWorker);
+        carService.addWardenToCar(savedCar2, savedWorker);
+        List<CarTO> cars = carService.findCarsByWarden(workerService.findWorkerById(savedWorker.getId()));
+
+        //then
+        assertThat(cars.size()).isEqualTo(2);
+    }
 }

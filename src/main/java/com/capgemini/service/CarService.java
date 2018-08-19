@@ -26,4 +26,6 @@ public interface CarService {
     void addWardenToCar(CarTO car, WorkerTO worker);
 
     List<WorkerTO> findWorkersByCar(CarTO car);
+
+    List<CarTO> findCarsByWarden(WorkerTO worker);
 }

@@ -118,8 +118,25 @@ public class CarServiceImpl implements CarService {
             workersTO.add(workerService.findWorkerById(id));
         }
 
-        System.out.println("car: " + car);
-        System.out.println(workersTO);
         return workersTO;
+    }
+
+    @Override
+    public List<CarTO> findCarsByWarden(WorkerTO worker) {
+        List<Long> cars;
+        List<CarTO> carsTO = new ArrayList<>();
+
+        if(worker.getCars() != null){
+            cars = worker.getCars();
+        }
+        else {
+            cars = new LinkedList<>();
+        }
+
+        for(Long id: cars){
+            carsTO.add(findCarById(id));
+        }
+
+        return carsTO;
     }
 }
