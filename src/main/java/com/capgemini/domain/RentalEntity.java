@@ -13,7 +13,6 @@ import java.util.Date;
 @Table(name = "rental")
 public class RentalEntity {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Setter(AccessLevel.NONE)

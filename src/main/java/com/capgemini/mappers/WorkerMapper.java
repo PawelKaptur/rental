@@ -2,6 +2,7 @@ package com.capgemini.mappers;
 
 import com.capgemini.domain.WorkerEntity;
 import com.capgemini.types.WorkerTO;
+import com.capgemini.types.WorkerTO.WorkerTOBuilder;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,30 +33,21 @@ public class WorkerMapper {
             return null;
         }
 
-        if (workerEntity.getWorkplaceId() != null) {
-            return new WorkerTO().builder().id(workerEntity.getId()).city(workerEntity.getCity())
-                    .firstName(workerEntity.getFirstName()).lastName(workerEntity.getLastName())
-                    .phoneNumber(workerEntity.getPhoneNumber()).postalCode(workerEntity.getPostalCode())
-                    .street(workerEntity.getStreet()).occupation(workerEntity.getOccupation())
-                    .dateOfBirth(workerEntity.getDateOfBirth()).workplaceId(workerEntity.getWorkplaceId().getId())
-                    .build();
-        }
-
-        if(workerEntity.getCars() != null) {
-            return new WorkerTO().builder().id(workerEntity.getId()).city(workerEntity.getCity())
-                    .firstName(workerEntity.getFirstName()).lastName(workerEntity.getLastName())
-                    .phoneNumber(workerEntity.getPhoneNumber()).postalCode(workerEntity.getPostalCode())
-                    .street(workerEntity.getStreet()).occupation(workerEntity.getOccupation())
-                    .dateOfBirth(workerEntity.getDateOfBirth()).cars(workerEntity.getCars().stream().map(c -> c.getId()).collect(Collectors.toList()))
-                    .build();
-        }
-
-        return new WorkerTO().builder().id(workerEntity.getId()).city(workerEntity.getCity())
+        WorkerTOBuilder workerTOBuilder = new WorkerTO().builder().id(workerEntity.getId()).city(workerEntity.getCity())
                 .firstName(workerEntity.getFirstName()).lastName(workerEntity.getLastName())
                 .phoneNumber(workerEntity.getPhoneNumber()).postalCode(workerEntity.getPostalCode())
                 .street(workerEntity.getStreet()).occupation(workerEntity.getOccupation())
-                .dateOfBirth(workerEntity.getDateOfBirth())
-                .build();
+                .dateOfBirth(workerEntity.getDateOfBirth());
+
+        if (workerEntity.getWorkplaceId() != null) {
+            workerTOBuilder = workerTOBuilder.workplaceId(workerEntity.getWorkplaceId().getId());
+        }
+
+        if(workerEntity.getCars() != null){
+            workerTOBuilder = workerTOBuilder.cars(workerEntity.getCars().stream().map(c -> c.getId()).collect(Collectors.toList()));
+        }
+
+        return workerTOBuilder.build();
     }
 
     public static List<WorkerTO> toWorkerTOList(List<WorkerEntity> workers) {

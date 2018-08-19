@@ -34,20 +34,16 @@ public class CarMapper {
             return null;
         }
 
-
-        if(carEntity.getWardens() != null) {
-            return new CarTOBuilder().withBrand(carEntity.getBrand()).withId(carEntity.getId()).withDateOfCreating(carEntity.getDateOfCreating())
-                    .withType(carEntity.getType()).withColor(carEntity.getColor()).withCourse(carEntity.getCourse()).withEngineCapacity(carEntity.getEngineCapacity())
-                    .withModel(carEntity.getModel()).withPower(carEntity.getPower()).withProductionYear(carEntity.getProductionYear())
-                    .withDateOfEditing(carEntity.getDateOfEditing()).withWardens(carEntity.getWardens().stream().map(w -> w.getId()).collect(Collectors.toList()))
-                    .build();
-        }
-
-        return new CarTOBuilder().withBrand(carEntity.getBrand()).withId(carEntity.getId()).withDateOfCreating(carEntity.getDateOfCreating())
+        CarTOBuilder carTOBuilder = new CarTOBuilder().withBrand(carEntity.getBrand()).withId(carEntity.getId()).withDateOfCreating(carEntity.getDateOfCreating())
                 .withType(carEntity.getType()).withColor(carEntity.getColor()).withCourse(carEntity.getCourse()).withEngineCapacity(carEntity.getEngineCapacity())
                 .withModel(carEntity.getModel()).withPower(carEntity.getPower()).withProductionYear(carEntity.getProductionYear())
-                .withDateOfEditing(carEntity.getDateOfEditing())
-                .build();
+                .withDateOfEditing(carEntity.getDateOfEditing());
+
+        if (carEntity.getWardens() != null){
+            carTOBuilder = carTOBuilder.withWardens(carEntity.getWardens().stream().map(w -> w.getId()).collect(Collectors.toList()));
+        }
+
+        return carTOBuilder.build();
     }
 
     public static List<CarTO> toCarTOList(List<CarEntity> cars) {
