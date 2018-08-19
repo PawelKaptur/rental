@@ -20,7 +20,9 @@ public class CarTO {
     private Double engineCapacity;
     private Integer power;
     private Integer course;
+    
     private List<Long> wardensId;
+    private List<Long> rentals;
 
     private Date dateOfCreating;
     private Date dateOfEditing;
@@ -39,9 +41,14 @@ public class CarTO {
         private Double engineCapacity;
         private Integer power;
         private Integer course;
+
+        private List<Long> wardens;
+        private List<Long> rentals;
+
         private Date dateOfCreating;
         private Date dateOfEditing;
-        private List<Long> wardensId;
+
+
 
         public CarTOBuilder() {
 
@@ -102,8 +109,13 @@ public class CarTO {
             return this;
         }
 
-        public CarTOBuilder withWardens(List<Long> wardensId){
-            this.wardensId = wardensId;
+        public CarTOBuilder withWardens(List<Long> wardens){
+            this.wardens = wardens;
+            return this;
+        }
+
+        public CarTOBuilder withRentals(List<Long> rentals){
+            this.rentals = rentals;
             return this;
         }
 
@@ -111,7 +123,7 @@ public class CarTO {
 
         public CarTO build(){
             //check
-            return new CarTO(id, type, brand, model, productionYear, color, engineCapacity, power, course, wardensId, dateOfCreating, dateOfEditing);
+            return new CarTO(id, type, brand, model, productionYear, color, engineCapacity, power, course, wardens, rentals, dateOfCreating, dateOfEditing);
         }
     }
 }

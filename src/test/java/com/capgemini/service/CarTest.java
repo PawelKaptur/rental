@@ -1,14 +1,17 @@
 package com.capgemini.service;
 
+import com.capgemini.dao.CarDao;
 import com.capgemini.types.CarTO;
 import com.capgemini.types.CarTO.CarTOBuilder;
-import org.junit.Before;
+import com.capgemini.types.WorkerTO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -20,14 +23,12 @@ public class CarTest {
     @Autowired
     private CarService carService;
 
-    @Before
-    public void setUp(){
-        carService.deleteAll();
-    }
+    @Autowired
+    private WorkerService workerService;
 
     @Test
+    @Transactional
     public void shouldFindCarById() {
-
         //given
         CarTO car = new CarTOBuilder().withBrand("Audi").withType("sedan")
                 .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
@@ -43,8 +44,8 @@ public class CarTest {
     }
 
     @Test
+    @Transactional
     public void shouldFindCarByBrand() {
-
         //given
         String brand = "BMW";
         CarTO car = new CarTOBuilder().withBrand(brand).withType("sedan")
@@ -69,6 +70,7 @@ public class CarTest {
     }
 
     @Test
+    @Transactional
     public void shouldDeleteCarById() {
         //given
         String brand = "Audi";
@@ -96,7 +98,6 @@ public class CarTest {
 
     @Test
     public void shouldUpdateCar() {
-
         //given
         String color = "White";
         CarTO car = new CarTOBuilder().withBrand("Audi").withType("sedan")
@@ -115,9 +116,10 @@ public class CarTest {
     }
 
     @Test
+    @Transactional
     public void shouldFindCarByTypeAndBrand() {
         //given
-        String brand = "Audi";
+        String brand = "Fiat";
         String type = "sedan";
         CarTO car = new CarTOBuilder().withBrand(brand).withType(type)
                 .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
@@ -144,6 +146,7 @@ public class CarTest {
     }
 
     @Test
+    @Transactional
     public void shouldDeleteAllCarsFromRepository(){
         //given
         String brand = "Audi";
@@ -163,6 +166,30 @@ public class CarTest {
 
         //then
         assertThat(cars).isEmpty();
+    }
+
+    @Test
+    public void shouldAddWardenToCar(){
+        //given
+        CarTO car = new CarTOBuilder().withBrand("Audi").withType("sedan")
+                .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
+                .withProductionYear(2015).build();
+        CarTO savedCar = carService.addCar(car);
+
+        WorkerTO worker = new WorkerTO().builder().dateOfBirth(new Date()).occupation("manager").street("asd").postalCode(12345)
+                .phoneNumber(987654321L).firstName("Seba").lastName("Kox").city("qwe").build();
+
+        WorkerTO savedWorker = workerService.addWorker(worker);
+
+        //when
+        carService.addWardenToCar(savedCar, savedWorker);
+
+        List<WorkerTO> workers = carService.findWorkersByCar(carService.findCarById(savedCar.getId()));
+        System.out.println(carService.findAllCars());
+
+        //then
+        assertThat(workers.size()).isEqualTo(1);
+        assertThat(workerService.findWorkerById(savedWorker.getId()).getCars().get(0)).isEqualTo(savedCar.getId());
     }
 
 }

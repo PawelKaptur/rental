@@ -41,6 +41,15 @@ public class WorkerMapper {
                     .build();
         }
 
+        if(workerEntity.getCars() != null) {
+            return new WorkerTO().builder().id(workerEntity.getId()).city(workerEntity.getCity())
+                    .firstName(workerEntity.getFirstName()).lastName(workerEntity.getLastName())
+                    .phoneNumber(workerEntity.getPhoneNumber()).postalCode(workerEntity.getPostalCode())
+                    .street(workerEntity.getStreet()).occupation(workerEntity.getOccupation())
+                    .dateOfBirth(workerEntity.getDateOfBirth()).cars(workerEntity.getCars().stream().map(c -> c.getId()).collect(Collectors.toList()))
+                    .build();
+        }
+
         return new WorkerTO().builder().id(workerEntity.getId()).city(workerEntity.getCity())
                 .firstName(workerEntity.getFirstName()).lastName(workerEntity.getLastName())
                 .phoneNumber(workerEntity.getPhoneNumber()).postalCode(workerEntity.getPostalCode())

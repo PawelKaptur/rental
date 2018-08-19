@@ -1,7 +1,9 @@
 package com.capgemini.service.impl;
 
 import com.capgemini.dao.CarDao;
+import com.capgemini.dao.WorkerDao;
 import com.capgemini.domain.CarEntity;
+import com.capgemini.domain.WorkerEntity;
 import com.capgemini.mappers.CarMapper;
 import com.capgemini.service.CarService;
 import com.capgemini.service.WorkerService;
@@ -9,12 +11,11 @@ import com.capgemini.types.CarTO;
 import com.capgemini.types.WorkerTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional(readOnly = true)
@@ -22,11 +23,13 @@ public class CarServiceImpl implements CarService {
 
     private CarDao carRepository;
     private WorkerService workerService;
+    private WorkerDao workerRepository;
 
     @Autowired
-    public CarServiceImpl(CarDao carRepository, WorkerService workerService) {
+    public CarServiceImpl(CarDao carRepository, WorkerService workerService, WorkerDao workerRepository) {
         this.carRepository = carRepository;
         this.workerService = workerService;
+        this.workerRepository = workerRepository;
     }
 
     @Override
@@ -76,15 +79,27 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public void addWardenToCar(CarTO carTO, WorkerTO workerTO) {
-        //to koniecznie zmienic
-/*        List<WorkerTO> workers = findWorkersByOutpost(outpost);
-        List<WorkerTo>
+    @Transactional(readOnly = false)
+    public void addWardenToCar(CarTO car, WorkerTO worker) {
+        List<WorkerTO> workers = findWorkersByCar(car);
+        List<WorkerEntity> workersEntities = new ArrayList<>();
 
-        workers.add(worker);
-        //outpost.setWorkers(workers);
-        outpost.setWorkers(workers.stream().map(w -> w.getId()).collect(Collectors.toList()));
-        outpostRepository.update(OutpostMapper.toOutpostEntity(outpost));*/
+        for(WorkerTO w: workers){
+            workersEntities.add(workerRepository.findOne(w.getId()));
+        }
+
+        CarEntity carEntity = carRepository.findOne(car.getId());
+        WorkerEntity addedWorker = workerRepository.findOne(worker.getId());
+
+        List<CarEntity> carEntities = addedWorker.getCars();
+        carEntities.add(carEntity);
+        addedWorker.setCars(carEntities);
+
+        workerRepository.update(addedWorker);
+        workersEntities.add(addedWorker);
+        carEntity.setWardens(workersEntities);
+
+        carRepository.update(carEntity);
     }
 
     @Override
@@ -97,14 +112,14 @@ public class CarServiceImpl implements CarService {
             workers = new LinkedList<>();
         }
 
-        List<WorkerTO> workersTO = new ArrayList<>(); // = workerService.findAllWorkers().stream().filter(w -> w.getId() == workers.stream().findAny())
+        List<WorkerTO> workersTO = new ArrayList<>();
 
         for(Long id: workers){
             workersTO.add(workerService.findWorkerById(id));
         }
 
+        System.out.println("car: " + car);
+        System.out.println(workersTO);
         return workersTO;
     }
-
-
 }

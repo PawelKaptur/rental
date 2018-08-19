@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -23,7 +24,7 @@ public class WorkerTO {
     private Integer postalCode;
     private Long phoneNumber;
 
-    //private OutpostTO workplaceId;
     private Long workplaceId;
+    private List<Long> cars;
 
 }
