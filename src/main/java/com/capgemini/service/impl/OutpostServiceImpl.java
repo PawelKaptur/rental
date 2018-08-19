@@ -8,6 +8,7 @@ import com.capgemini.mappers.OutpostMapper;
 import com.capgemini.mappers.WorkerMapper;
 import com.capgemini.service.OutpostService;
 import com.capgemini.service.WorkerService;
+import com.capgemini.types.CarTO;
 import com.capgemini.types.OutpostTO;
 import com.capgemini.types.WorkerTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -125,5 +127,14 @@ public class OutpostServiceImpl implements OutpostService {
         }
 
         return workersTO;
+    }
+
+    @Override
+    public List<WorkerTO> findWorkersByOutpostAndCar(OutpostTO outpost, CarTO car) {
+        List<WorkerTO> workersInOutpost = findWorkersByOutpost(outpost);
+
+        workersInOutpost = workersInOutpost.stream().filter(w -> w.getCars() != null && w.getCars().contains(car.getId())).collect(Collectors.toList());
+
+        return workersInOutpost;
     }
 }

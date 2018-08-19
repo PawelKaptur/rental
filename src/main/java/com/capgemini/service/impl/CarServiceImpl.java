@@ -90,8 +90,10 @@ public class CarServiceImpl implements CarService {
 
         CarEntity carEntity = carRepository.findOne(car.getId());
         WorkerEntity addedWorker = workerRepository.findOne(worker.getId());
-
         List<CarEntity> carEntities = addedWorker.getCars();
+        if(carEntities == null){
+            carEntities = new ArrayList<>();
+        }
         carEntities.add(carEntity);
         addedWorker.setCars(carEntities);
 

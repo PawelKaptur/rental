@@ -169,6 +169,7 @@ public class CarTest {
     }
 
     @Test
+    @Transactional
     public void shouldAddWardenToCar() {
         //given
         CarTO car = new CarTOBuilder().withBrand("Audi").withType("sedan")
@@ -191,6 +192,7 @@ public class CarTest {
     }
 
     @Test
+    @Transactional
     public void shouldFindCarsByWarden() {
         //given
         CarTO car = new CarTOBuilder().withBrand("Audi").withType("sedan")
@@ -212,4 +214,6 @@ public class CarTest {
         //then
         assertThat(cars.size()).isEqualTo(2);
     }
+
+
 }

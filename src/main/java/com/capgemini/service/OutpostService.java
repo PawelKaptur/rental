@@ -1,5 +1,6 @@
 package com.capgemini.service;
 
+import com.capgemini.types.CarTO;
 import com.capgemini.types.OutpostTO;
 import com.capgemini.types.WorkerTO;
 
@@ -23,4 +24,6 @@ public interface OutpostService {
     void removeWorkerFromOutpost(OutpostTO outpost, WorkerTO worker);
 
     List<WorkerTO> findWorkersByOutpost(OutpostTO outpost);
+
+    List<WorkerTO> findWorkersByOutpostAndCar(OutpostTO outpost, CarTO car);
 }
