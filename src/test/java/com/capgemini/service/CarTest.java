@@ -238,4 +238,31 @@ public class CarTest {
         assertThat(carService.findCarById(addedCar.getId()).getRentals().get(0)).isEqualTo(addedRental.getId());
         assertThat(rentalService.findRentaltById(addedRental.getId()).getCarId()).isEqualTo(addedCar.getId());
     }
+
+    @Test
+    @Transactional
+    public void shouldDeleteCarAndRentals() {
+        //given
+        RentalTO rentalTO = new RentalTO().builder().cost(2000).startDate(new Date()).endDate(new Date())
+                .build();
+        RentalTO addedRental = rentalService.addRental(rentalTO);
+        RentalTO addedRental2 = rentalService.addRental(rentalTO);
+        RentalTO addedRental3 = rentalService.addRental(rentalTO);
+
+        CarTO car = new CarTOBuilder().withBrand("Audi").withType("sedan")
+                .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
+                .withProductionYear(2015).build();
+        CarTO addedCar = carService.addCar(car);
+        carService.addRentalToCar(addedCar, addedRental);
+        carService.addRentalToCar(addedCar, addedRental2);
+
+        //when
+        carService.deleteCar(addedCar.getId());
+
+        //then
+        assertThat(carService.findCarById(addedCar.getId())).isNull();
+        assertThat(rentalService.findRentaltById(addedRental.getId())).isNull();
+        assertThat(rentalService.findRentaltById(addedRental2.getId())).isNull();
+        assertThat(rentalService.findRentaltById(addedRental3.getId())).isNotNull();
+    }
 }
