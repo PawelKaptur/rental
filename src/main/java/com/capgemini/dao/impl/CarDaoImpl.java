@@ -5,6 +5,7 @@ import com.capgemini.domain.CarEntity;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -26,6 +27,26 @@ public class CarDaoImpl extends AbstractDao<CarEntity, Long> implements CarDao {
                         " and upper(car.type) like concat(upper(:type), '%')", CarEntity.class);
         query.setParameter("type", type);
         query.setParameter("brand", brand);
+
+        return query.getResultList();
+    }
+
+/*    @Override
+    public List<CarEntity> findCarsRentedBetween(Date startDate, Date endDate) {
+        TypedQuery<CarEntity> query = entityManager.createQuery(
+                "select car from CarEntity car, RentalEntity rental where rental.carId = car.id " +
+                "and rental.startDate=:startDate", CarEntity.class);
+        query.setParameter("startDate", startDate);
+        return query.getResultList();
+    }*/
+
+    @Override
+    public List<CarEntity> findCarsRentedBetween(Date startDate, Date endDate) {
+        TypedQuery<CarEntity> query = entityManager.createQuery(
+                "select car from CarEntity car, RentalEntity rental where rental.carId = car.id " +
+                        "and rental.startDate<:endDate and rental.endDate>:startDate", CarEntity.class);
+        query.setParameter("startDate", startDate);
+        query.setParameter("endDate", endDate);
 
         return query.getResultList();
     }

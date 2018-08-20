@@ -289,4 +289,44 @@ public class CarTest {
         assertThat(rentalService.findRentaltById(addedRental3.getId())).isNotNull();
         assertThat(clientService.findClientById(addedClient.getId())).isNotNull();
     }
+
+    @Test
+    @Transactional
+    public void shouldCheckTimeForRentals(){
+        //given
+        Date startDate = new Date(1000L);
+        Date endDate = new Date(10000L);
+        RentalTO rentalTO = new RentalTO().builder().cost(2000).startDate(startDate).endDate(endDate)
+                .build();
+        RentalTO addedRental = rentalService.addRental(rentalTO);
+
+        CarTO car = new CarTOBuilder().withBrand("Audi").withType("sedan")
+                .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
+                .withProductionYear(2015).build();
+        CarTO addedCar = carService.addCar(car);
+
+        ClientTO clientTO = new ClientTO().builder().dateOfBirth(new Date()).street("asd").postalCode(12345)
+                .phoneNumber(987654321L).firstName("Seba").lastName("Kox").city("qwe")
+                .creditCardNumber("1234567890123456").email("seba.kox@gmailcom")
+                .build();
+
+        ClientTO addedClient = clientService.addClient(clientTO);
+
+        //when
+        carService.createRental(addedCar, addedRental, addedClient);
+
+
+        List<CarTO> cars = carService.findCarsRentedBetween(new Date(2000L), new Date(8000L));
+        List<CarTO> cars2 = carService.findCarsRentedBetween(new Date(100L), new Date(2000L));
+        List<CarTO> cars3 = carService.findCarsRentedBetween(new Date(100L), new Date(200L));
+        List<CarTO> cars4 = carService.findCarsRentedBetween(new Date(2000L), new Date(12000L));
+        List<CarTO> cars5 = carService.findCarsRentedBetween(new Date(11000L), new Date(12000L));
+
+        //then
+        assertThat(cars.size()).isEqualTo(1);
+        assertThat(cars2.size()).isEqualTo(1);
+        assertThat(cars3.size()).isEqualTo(0);
+        assertThat(cars4.size()).isEqualTo(1);
+        assertThat(cars5.size()).isEqualTo(0);
+    }
 }

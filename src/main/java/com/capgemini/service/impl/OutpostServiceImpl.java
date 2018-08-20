@@ -7,7 +7,6 @@ import com.capgemini.domain.WorkerEntity;
 import com.capgemini.mappers.OutpostMapper;
 import com.capgemini.mappers.WorkerMapper;
 import com.capgemini.service.OutpostService;
-import com.capgemini.service.WorkerService;
 import com.capgemini.types.CarTO;
 import com.capgemini.types.OutpostTO;
 import com.capgemini.types.WorkerTO;
@@ -25,13 +24,11 @@ import java.util.stream.Collectors;
 public class OutpostServiceImpl implements OutpostService {
 
     private OutpostDao outpostRepository;
-    private WorkerService workerService;
     private WorkerDao workerRepository;
 
     @Autowired
-    public OutpostServiceImpl(OutpostDao outpostRepository, WorkerService workerService, WorkerDao workerRepository) {
+    public OutpostServiceImpl(OutpostDao outpostRepository, WorkerDao workerRepository) {
         this.outpostRepository = outpostRepository;
-        this.workerService = workerService;
         this.workerRepository = workerRepository;
     }
 

@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -190,5 +191,10 @@ public class CarServiceImpl implements CarService {
         rentalEntitiesFromClient.add(rentalEntity);
         clientEntity.setRentals(rentalEntitiesFromClient);
         clientRepository.update(clientEntity);
+    }
+
+    @Override
+    public List<CarTO> findCarsRentedBetween(Date startDate, Date endDate) {
+        return CarMapper.toCarTOList(carRepository.findCarsRentedBetween(startDate, endDate));
     }
 }

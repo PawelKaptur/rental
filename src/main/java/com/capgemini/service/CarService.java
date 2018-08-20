@@ -1,7 +1,9 @@
 package com.capgemini.service;
 
+import com.capgemini.domain.CarEntity;
 import com.capgemini.types.*;
 
+import java.util.Date;
 import java.util.List;
 
 public interface CarService {
@@ -28,4 +30,6 @@ public interface CarService {
     List<CarTO> findCarsByWarden(WorkerTO worker);
 
     void createRental(CarTO car, RentalTO rental, ClientTO client);
+
+    List<CarTO> findCarsRentedBetween(Date startDate, Date endDate);
 }
