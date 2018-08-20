@@ -11,12 +11,11 @@ import java.util.List;
 
 @Entity
 @Data
-@Table(name = "clients")
+@Table(name = "client")
 public class ClientEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Setter(AccessLevel.NONE)
     private Long id;
 
     @Column(nullable = false, length = 30)
@@ -48,9 +47,4 @@ public class ClientEntity {
 
     @OneToMany
     private List<RentalEntity> rentals;
-
-    @Column(nullable = false)
-    private Date dateOfCreating;
-
-    private Date dateOfEditing;
 }
