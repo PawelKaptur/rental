@@ -43,6 +43,10 @@ public class CarMapper {
             carTOBuilder = carTOBuilder.withWardens(carEntity.getWardens().stream().map(w -> w.getId()).collect(Collectors.toList()));
         }
 
+        if(carEntity.getRentals() != null){
+            carTOBuilder = carTOBuilder.withRentals(carEntity.getRentals().stream().map(r -> r.getId()).collect(Collectors.toList()));
+        }
+
         return carTOBuilder.build();
     }
 

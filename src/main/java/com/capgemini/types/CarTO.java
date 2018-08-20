@@ -119,10 +119,7 @@ public class CarTO {
             return this;
         }
 
-        //daty tutaj?
-
         public CarTO build(){
-            //check
             return new CarTO(id, type, brand, model, productionYear, color, engineCapacity, power, course, wardens, rentals, dateOfCreating, dateOfEditing);
         }
     }

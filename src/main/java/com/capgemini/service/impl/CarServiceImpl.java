@@ -1,13 +1,16 @@
 package com.capgemini.service.impl;
 
 import com.capgemini.dao.CarDao;
+import com.capgemini.dao.RentalDao;
 import com.capgemini.dao.WorkerDao;
 import com.capgemini.domain.CarEntity;
+import com.capgemini.domain.RentalEntity;
 import com.capgemini.domain.WorkerEntity;
 import com.capgemini.mappers.CarMapper;
 import com.capgemini.service.CarService;
 import com.capgemini.service.WorkerService;
 import com.capgemini.types.CarTO;
+import com.capgemini.types.RentalTO;
 import com.capgemini.types.WorkerTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,12 +27,14 @@ public class CarServiceImpl implements CarService {
     private CarDao carRepository;
     private WorkerService workerService;
     private WorkerDao workerRepository;
+    private RentalDao rentalRepository;
 
     @Autowired
-    public CarServiceImpl(CarDao carRepository, WorkerService workerService, WorkerDao workerRepository) {
+    public CarServiceImpl(CarDao carRepository, WorkerService workerService, WorkerDao workerRepository, RentalDao rentalRepository) {
         this.carRepository = carRepository;
         this.workerService = workerService;
         this.workerRepository = workerRepository;
+        this.rentalRepository = rentalRepository;
     }
 
     @Override
@@ -140,5 +145,29 @@ public class CarServiceImpl implements CarService {
         }
 
         return carsTO;
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public void addRentalToCar(CarTO car, RentalTO rental) {
+        RentalEntity rentalEntity = rentalRepository.findOne(rental.getId());
+        CarEntity carEntity = carRepository.findOne(car.getId());
+        //moze od razu klient, i outpost startowy, ale to pozniej, tera kaskade sprobowac
+
+        rentalEntity.setCarId(carEntity);
+        rentalRepository.update(rentalEntity);
+
+        List<RentalEntity> rentalEntities;
+        if(carEntity.getRentals() == null){
+            rentalEntities = new ArrayList<>();
+        }
+        else{
+            rentalEntities = carEntity.getRentals();
+        }
+
+        rentalEntities.add(rentalEntity);
+
+        carEntity.setRentals(rentalEntities);
+        carRepository.update(carEntity);
     }
 }

@@ -2,6 +2,7 @@ package com.capgemini.service;
 
 import com.capgemini.types.CarTO;
 import com.capgemini.types.CarTO.CarTOBuilder;
+import com.capgemini.types.RentalTO;
 import com.capgemini.types.WorkerTO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,6 +25,9 @@ public class CarTest {
 
     @Autowired
     private WorkerService workerService;
+
+    @Autowired
+    private RentalService rentalService;
 
     @Test
     @Transactional
@@ -212,5 +216,26 @@ public class CarTest {
 
         //then
         assertThat(cars.size()).isEqualTo(2);
+    }
+
+    @Test
+    @Transactional
+    public void shouldAddRentalToCar() {
+        //given
+        RentalTO rentalTO = new RentalTO().builder().cost(2000).startDate(new Date()).endDate(new Date())
+                .build();
+        RentalTO addedRental = rentalService.addRental(rentalTO);
+
+        CarTO car = new CarTOBuilder().withBrand("Audi").withType("sedan")
+                .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
+                .withProductionYear(2015).build();
+        CarTO addedCar = carService.addCar(car);
+
+        //when
+        carService.addRentalToCar(addedCar, addedRental);
+
+        //then
+        assertThat(carService.findCarById(addedCar.getId()).getRentals().get(0)).isEqualTo(addedRental.getId());
+        assertThat(rentalService.findRentaltById(addedRental.getId()).getCarId()).isEqualTo(addedCar.getId());
     }
 }
