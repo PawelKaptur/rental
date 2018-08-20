@@ -32,4 +32,6 @@ public interface CarService {
     void createRental(CarTO car, RentalTO rental, ClientTO client);
 
     List<CarTO> findCarsRentedBetween(Date startDate, Date endDate);
+
+    List<CarTO> findCarsRentedByMoreThanTenClients();
 }

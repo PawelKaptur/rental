@@ -18,7 +18,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(properties = "spring.profiles.active=hsql")
+@SpringBootTest
 public class CarTest {
 
     @Autowired
@@ -328,5 +328,76 @@ public class CarTest {
         assertThat(cars3.size()).isEqualTo(0);
         assertThat(cars4.size()).isEqualTo(1);
         assertThat(cars5.size()).isEqualTo(0);
+    }
+
+    @Test
+    @Transactional
+    public void shouldFindCarsRentedMoreThanByTenClients(){
+        //given
+        RentalTO rentalTO = new RentalTO().builder().cost(2000).startDate(new Date()).build();
+        RentalTO addedRental = rentalService.addRental(rentalTO);
+        RentalTO addedRental2 = rentalService.addRental(rentalTO);
+        RentalTO addedRental3 = rentalService.addRental(rentalTO);
+        RentalTO addedRental4 = rentalService.addRental(rentalTO);
+        RentalTO addedRental5 = rentalService.addRental(rentalTO);
+        RentalTO addedRental6 = rentalService.addRental(rentalTO);
+        RentalTO addedRental7 = rentalService.addRental(rentalTO);
+        RentalTO addedRental8 = rentalService.addRental(rentalTO);
+        RentalTO addedRental9 = rentalService.addRental(rentalTO);
+        RentalTO addedRental10 = rentalService.addRental(rentalTO);
+        RentalTO addedRental11 = rentalService.addRental(rentalTO);
+        RentalTO addedRental12 = rentalService.addRental(rentalTO);
+        RentalTO addedRental13 = rentalService.addRental(rentalTO);
+        RentalTO addedRental14 = rentalService.addRental(rentalTO);
+        RentalTO addedRental15 = rentalService.addRental(rentalTO);
+
+        CarTO car = new CarTOBuilder().withBrand("Audi").withType("sedan")
+                .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
+                .withProductionYear(2015).build();
+        CarTO addedCar = carService.addCar(car);
+        CarTO addedCar2 = carService.addCar(car);
+
+        ClientTO clientTO = new ClientTO().builder().dateOfBirth(new Date()).street("asd").postalCode(12345)
+                .phoneNumber(987654321L).firstName("Seba").lastName("Kox").city("qwe")
+                .creditCardNumber("1234567890123456").email("seba.kox@gmailcom")
+                .build();
+
+        ClientTO addedClient = clientService.addClient(clientTO);
+        ClientTO addedClient2 = clientService.addClient(clientTO);
+        ClientTO addedClient3 = clientService.addClient(clientTO);
+        ClientTO addedClient4 = clientService.addClient(clientTO);
+        ClientTO addedClient5 = clientService.addClient(clientTO);
+        ClientTO addedClient6 = clientService.addClient(clientTO);
+        ClientTO addedClient7 = clientService.addClient(clientTO);
+        ClientTO addedClient8 = clientService.addClient(clientTO);
+        ClientTO addedClient9 = clientService.addClient(clientTO);
+        ClientTO addedClient10 = clientService.addClient(clientTO);
+        ClientTO addedClient11 = clientService.addClient(clientTO);
+        ClientTO addedClient12 = clientService.addClient(clientTO);
+        ClientTO addedClient13 = clientService.addClient(clientTO);
+        ClientTO addedClient14 = clientService.addClient(clientTO);
+        ClientTO addedClient15 = clientService.addClient(clientTO);
+
+        //when
+        carService.createRental(addedCar, addedRental, addedClient);
+        carService.createRental(addedCar, addedRental2, addedClient2);
+        carService.createRental(addedCar, addedRental3, addedClient3);
+        carService.createRental(addedCar, addedRental4, addedClient4);
+        carService.createRental(addedCar, addedRental5, addedClient5);
+        carService.createRental(addedCar, addedRental6, addedClient6);
+        carService.createRental(addedCar, addedRental7, addedClient7);
+        carService.createRental(addedCar, addedRental8, addedClient8);
+        carService.createRental(addedCar, addedRental9, addedClient9);
+        carService.createRental(addedCar, addedRental10, addedClient10);
+        carService.createRental(addedCar, addedRental11, addedClient11);
+        carService.createRental(addedCar2, addedRental12, addedClient12);
+        carService.createRental(addedCar2, addedRental13, addedClient13);
+        carService.createRental(addedCar2, addedRental14, addedClient14);
+        carService.createRental(addedCar2, addedRental15, addedClient15);
+
+        List<CarTO> cars = carService.findCarsRentedByMoreThanTenClients();
+
+        //then
+        assertThat(cars.size()).isEqualTo(1);
     }
 }

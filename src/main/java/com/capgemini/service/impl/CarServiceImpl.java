@@ -158,7 +158,6 @@ public class CarServiceImpl implements CarService {
     public void createRental(CarTO car, RentalTO rental, ClientTO client) {
         RentalEntity rentalEntity = rentalRepository.findOne(rental.getId());
         CarEntity carEntity = carRepository.findOne(car.getId());
-        //outpost startowy, ale to pozniej
         ClientEntity clientEntity = clientRepository.findOne(client.getId());
 
         rentalEntity.setCarId(carEntity);
@@ -196,5 +195,10 @@ public class CarServiceImpl implements CarService {
     @Override
     public List<CarTO> findCarsRentedBetween(Date startDate, Date endDate) {
         return CarMapper.toCarTOList(carRepository.findCarsRentedBetween(startDate, endDate));
+    }
+
+    @Override
+    public List<CarTO> findCarsRentedByMoreThanTenClients() {
+        return CarMapper.toCarTOList(carRepository.findCarsRentedByMoreThanTenClients());
     }
 }
