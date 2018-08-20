@@ -1,5 +1,6 @@
 package com.capgemini.service;
 
+import com.capgemini.WorkerSearchCriteria;
 import com.capgemini.types.WorkerTO;
 
 import java.util.List;
@@ -12,4 +13,6 @@ public interface WorkerService {
     void deleteAll();
 
     List<WorkerTO> findAllWorkers();
+
+    List<WorkerTO> findWorkerByParams(WorkerSearchCriteria workerSearchCriteria);
 }

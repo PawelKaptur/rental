@@ -18,7 +18,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(properties = "spring.profiles.active=hsql")
 public class CarTest {
 
     @Autowired
@@ -320,6 +320,7 @@ public class CarTest {
         List<CarTO> cars3 = carService.findCarsRentedBetween(new Date(100L), new Date(200L));
         List<CarTO> cars4 = carService.findCarsRentedBetween(new Date(2000L), new Date(12000L));
         List<CarTO> cars5 = carService.findCarsRentedBetween(new Date(11000L), new Date(12000L));
+        List<CarTO> cars6 = carService.findCarsRentedBetween(new Date(100L), new Date(12000L));
 
         //then
         assertThat(cars.size()).isEqualTo(1);
@@ -327,6 +328,7 @@ public class CarTest {
         assertThat(cars3.size()).isEqualTo(0);
         assertThat(cars4.size()).isEqualTo(1);
         assertThat(cars5.size()).isEqualTo(0);
+        assertThat(cars6.size()).isEqualTo(1);
     }
 
     @Test

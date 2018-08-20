@@ -1,5 +1,6 @@
 package com.capgemini.service.impl;
 
+import com.capgemini.WorkerSearchCriteria;
 import com.capgemini.dao.WorkerDao;
 import com.capgemini.domain.WorkerEntity;
 import com.capgemini.mappers.WorkerMapper;
@@ -43,5 +44,10 @@ public class WorkerServiceImpl implements WorkerService {
     @Override
     public List<WorkerTO> findAllWorkers() {
         return WorkerMapper.toWorkerTOList(workerRepository.findAll());
+    }
+
+    @Override
+    public List<WorkerTO> findWorkerByParams(WorkerSearchCriteria workerSearchCriteria) {
+        return WorkerMapper.toWorkerTOList(workerRepository.findWorkersByParams(workerSearchCriteria));
     }
 }
