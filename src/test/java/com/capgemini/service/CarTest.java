@@ -2,6 +2,7 @@ package com.capgemini.service;
 
 import com.capgemini.types.CarTO;
 import com.capgemini.types.CarTO.CarTOBuilder;
+import com.capgemini.types.ClientTO;
 import com.capgemini.types.RentalTO;
 import com.capgemini.types.WorkerTO;
 import org.junit.Test;
@@ -28,6 +29,9 @@ public class CarTest {
 
     @Autowired
     private RentalService rentalService;
+
+    @Autowired
+    private ClientService clientService;
 
     @Test
     @Transactional
@@ -231,12 +235,23 @@ public class CarTest {
                 .withProductionYear(2015).build();
         CarTO addedCar = carService.addCar(car);
 
+        ClientTO clientTO = new ClientTO().builder().dateOfBirth(new Date()).street("asd").postalCode(12345)
+                .phoneNumber(987654321L).firstName("Seba").lastName("Kox").city("qwe")
+                .creditCardNumber("1234567890123456").email("seba.kox@gmailcom")
+                .build();
+
+        ClientTO addedClient = clientService.addClient(clientTO);
+
         //when
-        carService.addRentalToCar(addedCar, addedRental);
+        carService.createRental(addedCar, addedRental, addedClient);
+
+
 
         //then
         assertThat(carService.findCarById(addedCar.getId()).getRentals().get(0)).isEqualTo(addedRental.getId());
+        assertThat(clientService.findClientById(addedClient.getId()).getRentals().get(0)).isEqualTo(addedRental.getId());
         assertThat(rentalService.findRentaltById(addedRental.getId()).getCarId()).isEqualTo(addedCar.getId());
+        assertThat(rentalService.findRentaltById(addedRental.getId()).getClientId()).isEqualTo(addedClient.getId());
     }
 
     @Test
@@ -253,8 +268,16 @@ public class CarTest {
                 .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
                 .withProductionYear(2015).build();
         CarTO addedCar = carService.addCar(car);
-        carService.addRentalToCar(addedCar, addedRental);
-        carService.addRentalToCar(addedCar, addedRental2);
+
+        ClientTO clientTO = new ClientTO().builder().dateOfBirth(new Date()).street("asd").postalCode(12345)
+                .phoneNumber(987654321L).firstName("Seba").lastName("Kox").city("qwe")
+                .creditCardNumber("1234567890123456").email("seba.kox@gmailcom")
+                .build();
+
+        ClientTO addedClient = clientService.addClient(clientTO);
+
+        carService.createRental(addedCar, addedRental, addedClient);
+        carService.createRental(addedCar, addedRental2, addedClient);
 
         //when
         carService.deleteCar(addedCar.getId());
@@ -264,5 +287,6 @@ public class CarTest {
         assertThat(rentalService.findRentaltById(addedRental.getId())).isNull();
         assertThat(rentalService.findRentaltById(addedRental2.getId())).isNull();
         assertThat(rentalService.findRentaltById(addedRental3.getId())).isNotNull();
+        assertThat(clientService.findClientById(addedClient.getId())).isNotNull();
     }
 }

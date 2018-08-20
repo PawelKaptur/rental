@@ -1,9 +1,6 @@
 package com.capgemini.service;
 
-import com.capgemini.types.CarTO;
-import com.capgemini.types.OutpostTO;
-import com.capgemini.types.RentalTO;
-import com.capgemini.types.WorkerTO;
+import com.capgemini.types.*;
 
 import java.util.List;
 
@@ -30,5 +27,5 @@ public interface CarService {
 
     List<CarTO> findCarsByWarden(WorkerTO worker);
 
-    void addRentalToCar(CarTO car, RentalTO rental);
+    void createRental(CarTO car, RentalTO rental, ClientTO client);
 }

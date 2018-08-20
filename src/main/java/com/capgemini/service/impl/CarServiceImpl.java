@@ -1,15 +1,18 @@
 package com.capgemini.service.impl;
 
 import com.capgemini.dao.CarDao;
+import com.capgemini.dao.ClientDao;
 import com.capgemini.dao.RentalDao;
 import com.capgemini.dao.WorkerDao;
 import com.capgemini.domain.CarEntity;
+import com.capgemini.domain.ClientEntity;
 import com.capgemini.domain.RentalEntity;
 import com.capgemini.domain.WorkerEntity;
 import com.capgemini.mappers.CarMapper;
 import com.capgemini.service.CarService;
 import com.capgemini.service.WorkerService;
 import com.capgemini.types.CarTO;
+import com.capgemini.types.ClientTO;
 import com.capgemini.types.RentalTO;
 import com.capgemini.types.WorkerTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +31,15 @@ public class CarServiceImpl implements CarService {
     private WorkerService workerService;
     private WorkerDao workerRepository;
     private RentalDao rentalRepository;
+    private ClientDao clientRepository;
 
     @Autowired
-    public CarServiceImpl(CarDao carRepository, WorkerService workerService, WorkerDao workerRepository, RentalDao rentalRepository) {
+    public CarServiceImpl(CarDao carRepository, WorkerService workerService, WorkerDao workerRepository, RentalDao rentalRepository, ClientDao clientRepository) {
         this.carRepository = carRepository;
         this.workerService = workerService;
         this.workerRepository = workerRepository;
         this.rentalRepository = rentalRepository;
+        this.clientRepository = clientRepository;
     }
 
     @Override
@@ -149,25 +154,41 @@ public class CarServiceImpl implements CarService {
 
     @Override
     @Transactional(readOnly = false)
-    public void addRentalToCar(CarTO car, RentalTO rental) {
+    public void createRental(CarTO car, RentalTO rental, ClientTO client) {
         RentalEntity rentalEntity = rentalRepository.findOne(rental.getId());
         CarEntity carEntity = carRepository.findOne(car.getId());
-        //moze od razu klient, i outpost startowy, ale to pozniej, tera kaskade sprobowac
+        //outpost startowy, ale to pozniej
+        ClientEntity clientEntity = clientRepository.findOne(client.getId());
 
         rentalEntity.setCarId(carEntity);
+        rentalEntity.setClientId(clientEntity);
+
         rentalRepository.update(rentalEntity);
 
-        List<RentalEntity> rentalEntities;
+        List<RentalEntity> rentalEntitiesFromCar;
         if(carEntity.getRentals() == null){
-            rentalEntities = new ArrayList<>();
+            rentalEntitiesFromCar = new ArrayList<>();
         }
         else{
-            rentalEntities = carEntity.getRentals();
+            rentalEntitiesFromCar = carEntity.getRentals();
         }
 
-        rentalEntities.add(rentalEntity);
+        rentalEntitiesFromCar.add(rentalEntity);
 
-        carEntity.setRentals(rentalEntities);
+        carEntity.setRentals(rentalEntitiesFromCar);
         carRepository.update(carEntity);
+
+        List<RentalEntity> rentalEntitiesFromClient;
+
+        if(clientEntity.getRentals() == null){
+            rentalEntitiesFromClient = new ArrayList<>();
+        }
+        else{
+            rentalEntitiesFromClient = carEntity.getRentals();
+        }
+
+        rentalEntitiesFromClient.add(rentalEntity);
+        clientEntity.setRentals(rentalEntitiesFromClient);
+        clientRepository.update(clientEntity);
     }
 }
