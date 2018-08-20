@@ -1,9 +1,7 @@
 package com.capgemini.domain;
 
 
-import lombok.AccessLevel;
 import lombok.Data;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -15,7 +13,6 @@ public class RentalEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Setter(AccessLevel.NONE)
     private Long id;
 
     @ManyToOne
@@ -38,11 +35,4 @@ public class RentalEntity {
     private OutpostEntity endOutpostId;
 
     private Integer cost;
-
-    @Column(nullable = false)
-    private Date dateOfCreating;
-
-    private Date dateOfEditing;
-
-
 }

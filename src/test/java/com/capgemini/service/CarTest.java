@@ -1,6 +1,5 @@
 package com.capgemini.service;
 
-import com.capgemini.dao.CarDao;
 import com.capgemini.types.CarTO;
 import com.capgemini.types.CarTO.CarTOBuilder;
 import com.capgemini.types.WorkerTO;
@@ -214,6 +213,4 @@ public class CarTest {
         //then
         assertThat(cars.size()).isEqualTo(2);
     }
-
-
 }
