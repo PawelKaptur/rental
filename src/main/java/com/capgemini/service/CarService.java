@@ -34,4 +34,6 @@ public interface CarService {
     List<CarTO> findCarsRentedBetween(Date startDate, Date endDate);
 
     List<CarTO> findCarsRentedByMoreThanTenClients();
+
+    List<CarTO> findCarByBrandCriteriaApi(String brand);
 }

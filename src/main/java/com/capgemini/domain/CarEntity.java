@@ -52,12 +52,12 @@ public class CarEntity {
     private Date dateOfEditing;
 
     @PrePersist
-    protected void onCreate(){
+    protected void onCreate() {
         dateOfCreating = new Date();
     }
 
     @PreUpdate
-    protected void onUpdate(){
+    protected void onUpdate() {
         dateOfEditing = new Date();
     }
 }

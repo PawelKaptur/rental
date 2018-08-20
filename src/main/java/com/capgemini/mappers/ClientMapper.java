@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 
 public class ClientMapper {
 
-    public static ClientEntity toClientEntity(ClientTO clientTO){
-        if(clientTO == null){
+    public static ClientEntity toClientEntity(ClientTO clientTO) {
+        if (clientTO == null) {
             return null;
         }
 
@@ -29,7 +29,7 @@ public class ClientMapper {
     }
 
     public static ClientTO toClientTO(ClientEntity clientEntity) {
-        if(clientEntity == null){
+        if (clientEntity == null) {
             return null;
         }
 
@@ -40,7 +40,7 @@ public class ClientMapper {
                 .phoneNumber(clientEntity.getPhoneNumber()).postalCode(clientEntity.getPostalCode())
                 .street(clientEntity.getStreet());
 
-        if (clientEntity.getRentals() != null){
+        if (clientEntity.getRentals() != null) {
             clientTOBuilder = clientTOBuilder.rentals(clientEntity.getRentals().stream().map(w -> w.getId()).collect(Collectors.toList()));
         }
 

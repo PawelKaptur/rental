@@ -5,6 +5,10 @@ import com.capgemini.domain.CarEntity;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
 import java.util.Date;
 import java.util.List;
 
@@ -42,13 +46,26 @@ public class CarDaoImpl extends AbstractDao<CarEntity, Long> implements CarDao {
         return query.getResultList();
     }
 
-    //                "select distinct(car) from CarEntity car, RentalEntity rental where rental.carId = car.id " +
     @Override
     public List<CarEntity> findCarsRentedByMoreThanTenClients() {
         TypedQuery<CarEntity> query = entityManager.createQuery(
                 "select car from CarEntity car join car.rentals c group by car.id" +
-                " having count(distinct c.clientId.id)>10", CarEntity.class);
+                        " having count(distinct c.clientId.id)>10", CarEntity.class);
 
         return query.getResultList();
+    }
+
+    @Override
+    public List<CarEntity> findCarByBrandCriteriaApi(String brand) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+
+        CriteriaQuery<CarEntity> cq = cb.createQuery(CarEntity.class);
+        Root<CarEntity> car = cq.from(CarEntity.class);
+        ParameterExpression<String> p = cb.parameter(String.class);
+        cq.select(car).where(cb.like(car.get("brand"), p));
+        TypedQuery<CarEntity> q = entityManager.createQuery(cq);
+        q.setParameter(p, brand);
+
+        return q.getResultList();
     }
 }

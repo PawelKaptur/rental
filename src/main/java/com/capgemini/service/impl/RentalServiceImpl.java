@@ -22,7 +22,7 @@ public class RentalServiceImpl implements RentalService {
 
     @Override
     public RentalTO findRentaltById(Long id) {
-         return RentalMapper.toRentalTO(rentalRepository.findOne(id));
+        return RentalMapper.toRentalTO(rentalRepository.findOne(id));
     }
 
     @Override

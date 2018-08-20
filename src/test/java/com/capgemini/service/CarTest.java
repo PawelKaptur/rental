@@ -246,7 +246,6 @@ public class CarTest {
         carService.createRental(addedCar, addedRental, addedClient);
 
 
-
         //then
         assertThat(carService.findCarById(addedCar.getId()).getRentals().get(0)).isEqualTo(addedRental.getId());
         assertThat(clientService.findClientById(addedClient.getId()).getRentals().get(0)).isEqualTo(addedRental.getId());
@@ -292,7 +291,7 @@ public class CarTest {
 
     @Test
     @Transactional
-    public void shouldCheckTimeForRentals(){
+    public void shouldCheckTimeForRentals() {
         //given
         Date startDate = new Date(1000L);
         Date endDate = new Date(10000L);
@@ -332,7 +331,7 @@ public class CarTest {
 
     @Test
     @Transactional
-    public void shouldFindCarsRentedMoreThanByTenClients(){
+    public void shouldFindCarsRentedMoreThanByTenClients() {
         //given
         RentalTO rentalTO = new RentalTO().builder().cost(2000).startDate(new Date()).build();
         RentalTO addedRental = rentalService.addRental(rentalTO);
@@ -399,5 +398,31 @@ public class CarTest {
 
         //then
         assertThat(cars.size()).isEqualTo(1);
+    }
+
+    @Test
+    @Transactional
+    public void shouldFindCarByBrandCriteriaApi() {
+        //given
+        String brand = "BMW";
+        CarTO car = new CarTOBuilder().withBrand(brand).withType("sedan")
+                .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
+                .withProductionYear(2015).build();
+        CarTO car2 = new CarTOBuilder().withBrand(brand).withType("sedan")
+                .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
+                .withProductionYear(2015).build();
+        CarTO car3 = new CarTOBuilder().withBrand("nieAudi").withType("sedan")
+                .withModel("A4").withPower(200).withEngineCapacity(1.8).withCourse(5000).withColor("Black")
+                .withProductionYear(2015).build();
+        carService.addCar(car);
+        carService.addCar(car2);
+        carService.addCar(car3);
+
+        //when
+        List<CarTO> cars = carService.findCarByBrandCriteriaApi(brand);
+
+        //then
+        assertThat(cars.size()).isEqualTo(2);
+        assertThat(cars.stream().anyMatch(c -> c.getBrand().equals(brand))).isTrue();
     }
 }

@@ -3,7 +3,6 @@ package com.capgemini.types;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.Collection;
 import java.util.List;
 
 @Data
@@ -17,64 +16,57 @@ public class OutpostTO {
     private Long phoneNumber;
     private String email;
 
-    //private List<WorkerTO> workers;
     private List<Long> workers;
 
-    public static class OutpostTOBuilder{
+    public static class OutpostTOBuilder {
         private Long id;
         private String city;
         private String street;
         private Integer postalCode;
         private Long phoneNumber;
         private String email;
-        //private List<WorkerTO> workers;
         private List<Long> workers;
 
-        public OutpostTOBuilder(){
+        public OutpostTOBuilder() {
 
         }
 
-        public OutpostTOBuilder withId(Long id){
+        public OutpostTOBuilder withId(Long id) {
             this.id = id;
             return this;
         }
 
-        public OutpostTOBuilder withCity(String city){
+        public OutpostTOBuilder withCity(String city) {
             this.city = city;
             return this;
         }
 
-        public OutpostTOBuilder withStreet(String street){
+        public OutpostTOBuilder withStreet(String street) {
             this.street = street;
             return this;
         }
 
-        public OutpostTOBuilder withPostalCode(Integer postalCode){
+        public OutpostTOBuilder withPostalCode(Integer postalCode) {
             this.postalCode = postalCode;
             return this;
         }
 
-        public OutpostTOBuilder withPhoneNumber(Long phoneNumber){
+        public OutpostTOBuilder withPhoneNumber(Long phoneNumber) {
             this.phoneNumber = phoneNumber;
             return this;
         }
 
-        public OutpostTOBuilder withEmail(String email){
+        public OutpostTOBuilder withEmail(String email) {
             this.email = email;
             return this;
         }
 
-/*        public OutpostTOBuilder withWorkers(List<WorkerTO> workers){
-            this.workers = workers;
-            return this;
-        }   */
-
-        public OutpostTOBuilder withWorkers(List<Long> workers){
+        public OutpostTOBuilder withWorkers(List<Long> workers) {
             this.workers = workers;
             return this;
         }
 
-        public OutpostTO build(){
+        public OutpostTO build() {
             return new OutpostTO(id, city, street, postalCode, phoneNumber, email, workers);
         }
     }

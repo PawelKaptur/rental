@@ -6,7 +6,7 @@ import com.capgemini.types.RentalTO.RentalTOBuilder;
 
 public class RentalMapper {
 
-    public static RentalEntity toRentalEntity(RentalTO rentalTO){
+    public static RentalEntity toRentalEntity(RentalTO rentalTO) {
         if (rentalTO == null) {
             return null;
         }
@@ -21,8 +21,8 @@ public class RentalMapper {
     }
 
 
-    public static RentalTO toRentalTO(RentalEntity rentalEntity){
-        if(rentalEntity == null){
+    public static RentalTO toRentalTO(RentalEntity rentalEntity) {
+        if (rentalEntity == null) {
             return null;
         }
 
@@ -31,19 +31,19 @@ public class RentalMapper {
                 .endDate(rentalEntity.getEndDate());
 
 
-        if(rentalEntity.getClientId() != null){
+        if (rentalEntity.getClientId() != null) {
             rentalTOBuilder = rentalTOBuilder.clientId(rentalEntity.getClientId().getId());
         }
 
-        if(rentalEntity.getCarId() != null){
+        if (rentalEntity.getCarId() != null) {
             rentalTOBuilder = rentalTOBuilder.carId(rentalEntity.getCarId().getId());
         }
 
-        if(rentalEntity.getStartOutpostId() != null){
+        if (rentalEntity.getStartOutpostId() != null) {
             rentalTOBuilder = rentalTOBuilder.startOutpostId(rentalEntity.getStartOutpostId().getId());
         }
 
-        if(rentalEntity.getEndOutpostId() != null){
+        if (rentalEntity.getEndOutpostId() != null) {
             rentalTOBuilder = rentalTOBuilder.endOutpostId(rentalEntity.getEndOutpostId().getId());
         }
 

@@ -49,7 +49,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public CarTO findCarById(Long id){
+    public CarTO findCarById(Long id) {
         return CarMapper.toCarTO(carRepository.findOne(id));
     }
 
@@ -95,14 +95,14 @@ public class CarServiceImpl implements CarService {
         List<WorkerTO> workers = findWorkersByCar(car);
         List<WorkerEntity> workersEntities = new ArrayList<>();
 
-        for(WorkerTO w: workers){
+        for (WorkerTO w : workers) {
             workersEntities.add(workerRepository.findOne(w.getId()));
         }
 
         CarEntity carEntity = carRepository.findOne(car.getId());
         WorkerEntity addedWorker = workerRepository.findOne(worker.getId());
         List<CarEntity> carEntities = addedWorker.getCars();
-        if(carEntities == null){
+        if (carEntities == null) {
             carEntities = new ArrayList<>();
         }
         carEntities.add(carEntity);
@@ -118,16 +118,15 @@ public class CarServiceImpl implements CarService {
     @Override
     public List<WorkerTO> findWorkersByCar(CarTO car) {
         List<Long> workers;
-        if(car.getWardensId() != null){
+        if (car.getWardensId() != null) {
             workers = car.getWardensId();
-        }
-        else {
+        } else {
             workers = new LinkedList<>();
         }
 
         List<WorkerTO> workersTO = new ArrayList<>();
 
-        for(Long id: workers){
+        for (Long id : workers) {
             workersTO.add(workerService.findWorkerById(id));
         }
 
@@ -139,14 +138,13 @@ public class CarServiceImpl implements CarService {
         List<Long> cars;
         List<CarTO> carsTO = new ArrayList<>();
 
-        if(worker.getCars() != null){
+        if (worker.getCars() != null) {
             cars = worker.getCars();
-        }
-        else {
+        } else {
             cars = new LinkedList<>();
         }
 
-        for(Long id: cars){
+        for (Long id : cars) {
             carsTO.add(findCarById(id));
         }
 
@@ -166,10 +164,9 @@ public class CarServiceImpl implements CarService {
         rentalRepository.update(rentalEntity);
 
         List<RentalEntity> rentalEntitiesFromCar;
-        if(carEntity.getRentals() == null){
+        if (carEntity.getRentals() == null) {
             rentalEntitiesFromCar = new ArrayList<>();
-        }
-        else{
+        } else {
             rentalEntitiesFromCar = carEntity.getRentals();
         }
 
@@ -180,10 +177,9 @@ public class CarServiceImpl implements CarService {
 
         List<RentalEntity> rentalEntitiesFromClient;
 
-        if(clientEntity.getRentals() == null){
+        if (clientEntity.getRentals() == null) {
             rentalEntitiesFromClient = new ArrayList<>();
-        }
-        else{
+        } else {
             rentalEntitiesFromClient = carEntity.getRentals();
         }
 
@@ -200,5 +196,10 @@ public class CarServiceImpl implements CarService {
     @Override
     public List<CarTO> findCarsRentedByMoreThanTenClients() {
         return CarMapper.toCarTOList(carRepository.findCarsRentedByMoreThanTenClients());
+    }
+
+    @Override
+    public List<CarTO> findCarByBrandCriteriaApi(String brand) {
+        return CarMapper.toCarTOList(carRepository.findCarByBrandCriteriaApi(brand));
     }
 }

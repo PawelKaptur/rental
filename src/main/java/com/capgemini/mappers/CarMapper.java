@@ -9,8 +9,8 @@ import java.util.stream.Collectors;
 
 public class CarMapper {
 
-    public static CarEntity toCarEntity(CarTO carTO){
-        if(carTO == null){
+    public static CarEntity toCarEntity(CarTO carTO) {
+        if (carTO == null) {
             return null;
         }
 
@@ -30,7 +30,7 @@ public class CarMapper {
     }
 
     public static CarTO toCarTO(CarEntity carEntity) {
-        if(carEntity == null){
+        if (carEntity == null) {
             return null;
         }
 
@@ -39,11 +39,11 @@ public class CarMapper {
                 .withModel(carEntity.getModel()).withPower(carEntity.getPower()).withProductionYear(carEntity.getProductionYear())
                 .withDateOfEditing(carEntity.getDateOfEditing());
 
-        if (carEntity.getWardens() != null){
+        if (carEntity.getWardens() != null) {
             carTOBuilder = carTOBuilder.withWardens(carEntity.getWardens().stream().map(w -> w.getId()).collect(Collectors.toList()));
         }
 
-        if(carEntity.getRentals() != null){
+        if (carEntity.getRentals() != null) {
             carTOBuilder = carTOBuilder.withRentals(carEntity.getRentals().stream().map(r -> r.getId()).collect(Collectors.toList()));
         }
 

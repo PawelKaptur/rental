@@ -48,8 +48,6 @@ public class CarTO {
         private Date dateOfCreating;
         private Date dateOfEditing;
 
-
-
         public CarTOBuilder() {
 
         }

@@ -43,7 +43,7 @@ public class WorkerMapper {
             workerTOBuilder = workerTOBuilder.workplaceId(workerEntity.getWorkplaceId().getId());
         }
 
-        if(workerEntity.getCars() != null){
+        if (workerEntity.getCars() != null) {
             workerTOBuilder = workerTOBuilder.cars(workerEntity.getCars().stream().map(c -> c.getId()).collect(Collectors.toList()));
         }
 
