@@ -14,7 +14,7 @@ import java.util.Date;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(properties = "spring.profiles.active=hsql")
 public class ClientTest {
 
     @Autowired

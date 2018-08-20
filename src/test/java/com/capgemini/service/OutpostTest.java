@@ -17,7 +17,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(properties = "spring.profiles.active=hsql")
 public class OutpostTest {
 
     @Autowired
@@ -213,7 +213,7 @@ public class OutpostTest {
 
     @Test
     @Transactional
-    public void shouldFindWorkersByOutpostAndCar(){
+    public void shouldFindWorkersByOutpostAndCar() {
         OutpostTO outpostTO = new OutpostTOBuilder().withPhoneNumber(123456789L)
                 .withEmail("out1@gmail.com").withStreet("Mokebe")
                 .withPostalCode(21345).withCity("New York").build();
@@ -241,9 +241,9 @@ public class OutpostTest {
         outpostService.addWorkerToOutpost(savedOutpost, savedWorker);
         outpostService.addWorkerToOutpost(savedOutpost, savedWorker2);
         outpostService.addWorkerToOutpost(savedOutpost2, savedWorker3);
-        List<WorkerTO> workers =  outpostService.findWorkersByOutpostAndCar(outpostService.findOutpostById(savedOutpost.getId()), carService.findCarById(savedCar.getId()));
-        List<WorkerTO> workers2 =  outpostService.findWorkersByOutpostAndCar(outpostService.findOutpostById(savedOutpost.getId()), carService.findCarById(savedCar2.getId()));
-        List<WorkerTO> workers3 =  outpostService.findWorkersByOutpostAndCar(outpostService.findOutpostById(savedOutpost2.getId()), carService.findCarById(savedCar2.getId()));
+        List<WorkerTO> workers = outpostService.findWorkersByOutpostAndCar(outpostService.findOutpostById(savedOutpost.getId()), carService.findCarById(savedCar.getId()));
+        List<WorkerTO> workers2 = outpostService.findWorkersByOutpostAndCar(outpostService.findOutpostById(savedOutpost.getId()), carService.findCarById(savedCar2.getId()));
+        List<WorkerTO> workers3 = outpostService.findWorkersByOutpostAndCar(outpostService.findOutpostById(savedOutpost2.getId()), carService.findCarById(savedCar2.getId()));
 
         //then
         assertThat(workers.size()).isEqualTo(1);

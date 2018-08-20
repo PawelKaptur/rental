@@ -1,10 +1,6 @@
 package com.capgemini.service;
 
-import com.capgemini.domain.WorkerEntity;
-import com.capgemini.types.OutpostTO;
 import com.capgemini.types.WorkerTO;
-import com.capgemini.types.WorkerTO.WorkerTOBuilder;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +14,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(properties = "spring.profiles.active=hsql")
 public class WorkerTest {
 
     @Autowired
@@ -29,7 +25,7 @@ public class WorkerTest {
 
     @Test
     @Transactional
-    public void shouldFindWorkerById(){
+    public void shouldFindWorkerById() {
         //given
         WorkerTO worker = new WorkerTO().builder().dateOfBirth(new Date()).occupation("manager").street("asd").postalCode(12345)
                 .phoneNumber(987654321L).firstName("Seba").lastName("Kox").city("qwe").build();
@@ -45,7 +41,7 @@ public class WorkerTest {
 
     @Test
     @Transactional
-    public void shouldFindAllWorkers(){
+    public void shouldFindAllWorkers() {
         //given
         WorkerTO worker = new WorkerTO().builder().dateOfBirth(new Date()).occupation("manager").street("asd").postalCode(12345)
                 .phoneNumber(987654321L).firstName("Seba").lastName("Kox").city("qwe").build();
@@ -63,7 +59,7 @@ public class WorkerTest {
 
     @Test
     @Transactional
-    public void shouldDeleteAllWorkers(){
+    public void shouldDeleteAllWorkers() {
         //given
         WorkerTO worker = new WorkerTO().builder().dateOfBirth(new Date()).occupation("manager").street("asd").postalCode(12345)
                 .phoneNumber(987654321L).firstName("Seba").lastName("Kox").city("qwe").build();

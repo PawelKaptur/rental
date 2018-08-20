@@ -2,10 +2,8 @@ package com.capgemini.service.impl;
 
 import com.capgemini.dao.WorkerDao;
 import com.capgemini.domain.WorkerEntity;
-import com.capgemini.mappers.OutpostMapper;
 import com.capgemini.mappers.WorkerMapper;
 import com.capgemini.service.WorkerService;
-import com.capgemini.types.OutpostTO;
 import com.capgemini.types.WorkerTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
